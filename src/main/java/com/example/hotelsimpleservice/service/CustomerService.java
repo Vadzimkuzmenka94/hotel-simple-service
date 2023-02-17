@@ -1,0 +1,18 @@
+
+package com.example.hotelsimpleservice.service;
+
+import com.example.hotelsimpleservice.dto.CustomerDto;
+import com.example.hotelsimpleservice.model.Customer;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public interface CustomerService {
+    CustomerDto save(CustomerDto customerDto);
+
+    Optional<Customer> readByName(String login);
+
+    void delete (String login);
+}
+

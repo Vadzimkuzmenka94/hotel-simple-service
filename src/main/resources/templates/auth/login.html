@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+</head>
+<body background="https://pbs.twimg.com/media/EP8YY4eWAAIBpPW.jpg:large">
+
+<div>
+
+    <form name="f" th:action="@{/process_login}" method="post">
+        <fieldset>
+            <center>  <legend>Введите логин и пароль</legend>
+                <div th:if="${param.error}" style="color: red"> Неверный логин или пароль </div>
+                <label for="username"> Введите логин: </label>
+                <input type="text" name="username" id="username"/>
+                <br/>
+                <label for="password"> Введите пароль: </label>
+                <input type="password" name="password" id="password"/>
+                <br/>
+                <div class="form-actions">
+                    <button type="submit" class="btn"> Вход в систему </button>
+                </div>
+            </center>
+        </fieldset>
+    </form>
+    <form th:action="@{/logout}" th:method="POST">
+        <center> <input type="submit" value="Выйти из аккаунта"/></center>
+    </form>
+    <form action="http://localhost:8080/api/auth/registration">
+        <center> <button type="submit"> Зарегистрироваться </button></center>
+    </form>
+    <form action="https://www.championat.com/">
+        <center>   <button type="submit"> Новости спорта </button></center>
+    </form>
+    <form action="https://yandex.com.ge/weather/batumi?lat=41.651102&lon=41.636267">
+        <center>   <button type="submit"> Погода в Батуми </button> </center>
+    </form>
+</div>
+</body>
+</html>
