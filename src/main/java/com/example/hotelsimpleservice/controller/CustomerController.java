@@ -2,18 +2,15 @@ package com.example.hotelsimpleservice.controller;
 
 import com.example.hotelsimpleservice.dto.CustomerDto;
 import com.example.hotelsimpleservice.model.Customer;
-import com.example.hotelsimpleservice.model.Room;
 import com.example.hotelsimpleservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -22,25 +19,25 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/customers")
 public class CustomerController {
     private final CustomerService customerService;
+/*    private final MailSender mailSender;*/
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService/*, MailSender mailSender*/) {
         this.customerService = customerService;
+/*        this.mailSender = mailSender;*/
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Customer>> getAll() {
+        List<Customer> customers = customerService.findAll();
+        addLinkToEntity(customers);
+        return ResponseEntity.ok().body(customers);
     }
 
     @PostMapping
     public ResponseEntity<CustomerDto> create(@RequestBody CustomerDto user) {
-    /*    String emailTo = user.getEmail(); // email получателя
-        String emailSubject = "New booking in Batumi booking service"; // тема сообщения
-        String emailText = "Здравствуйте!\n\n" +
-                        "Мы хотим сообщить вам, что было создано новое бронирование на имя %s. " +
-                        "Номер комнаты: %s, дата бронирования: %s.\n\n" +
-                        "С уважением,\nКоманда бронирования номеров";
-        try {
-            sendEmail(emailTo, emailSubject, emailText);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }*/
+        customerService.save(user);
+    /*    mailSender.sendEmail(user.getEmail(), "message", "Congratilations!");*/
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.save(user));
     }
 
@@ -87,5 +84,12 @@ public class CustomerController {
         customer.add(linkTo(methodOn(CustomerController.class).findByLogin(customer.getLogin())).withRel("Link for get customer by login"));
         customer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(customer.getLogin())).withRel("Link for delete customer"));
         return customer;
+    }
+
+    public List<Customer> addLinkToEntity(List<Customer> customers) {
+        customers.stream()
+                .peek(this::generateResponseWithLinks)
+                .collect(Collectors.toList());
+        return customers;
     }
 }

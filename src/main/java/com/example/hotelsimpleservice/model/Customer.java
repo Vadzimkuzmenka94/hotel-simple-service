@@ -37,4 +37,9 @@ public class Customer extends RepresentationModel <Customer>  {
     private String cardNumber;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<Booking> bookings;
+
+    @PrePersist
+    public void prePersist() {
+        this.role = "USER";
+    }
 }

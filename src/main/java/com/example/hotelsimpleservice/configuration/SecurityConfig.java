@@ -30,13 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.
                 csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth/login", "/error", "/auth/registration")
+                .antMatchers("/auth/login", "/error", "/auth/registration", "/auth/successful-registration")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/auth/login")
                 .loginProcessingUrl("/process_login")
-                .defaultSuccessUrl("/auth/registration", true)
+                .defaultSuccessUrl("/admin/show-all-actions", true)
                 .failureUrl("/auth/login?error");
     }
 

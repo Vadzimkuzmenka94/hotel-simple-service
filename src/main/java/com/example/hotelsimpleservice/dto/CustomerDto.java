@@ -22,6 +22,7 @@ public class CustomerDto extends RepresentationModel<CustomerDto> {
     private String surname;
     private String email;
     private String cardNumber;
+/*    private String activationCode;*/
     Set<Booking> bookings;
 
     public CustomerDto(Long id, String login, String password, String role, String name,
@@ -34,5 +35,6 @@ public class CustomerDto extends RepresentationModel<CustomerDto> {
         this.surname = surname;
         this.email = email;
         this.cardNumber = cardNumber;
+  /*      this.activationCode = activationCode;*/
     }
 }
