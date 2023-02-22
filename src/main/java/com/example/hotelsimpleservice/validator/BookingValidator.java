@@ -11,6 +11,8 @@ import java.util.Objects;
 
 @Service
 public class BookingValidator {
+    private final String BYN_CURRENCY = "BYN";
+    private final String LARI_CURRENCY = "LARI";
     private final RoomService roomService;
 
     @Autowired
@@ -19,8 +21,8 @@ public class BookingValidator {
     }
 
     public void validate(Booking booking) {
-        if (!(Objects.equals(booking.getCurrency(), "BYN") ||
-                Objects.equals(booking.getCurrency(), "LARI")) &&
+        if (!(Objects.equals(booking.getCurrency(), BYN_CURRENCY) ||
+                Objects.equals(booking.getCurrency(), LARI_CURRENCY)) &&
                 !booking.getCurrency().isEmpty()) {
             throw new AppException(ErrorCode.BOOKING_CURRENCY_INVALID);
         }

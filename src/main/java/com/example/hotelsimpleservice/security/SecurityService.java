@@ -8,6 +8,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface SecurityService extends UserDetailsService {
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException;
+     UserDetails loadUserByUsername(String login) throws UsernameNotFoundException;
 }
-

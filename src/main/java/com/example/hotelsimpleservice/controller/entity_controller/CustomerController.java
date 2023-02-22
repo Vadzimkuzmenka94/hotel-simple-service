@@ -1,6 +1,7 @@
-package com.example.hotelsimpleservice.controller;
+package com.example.hotelsimpleservice.controller.entity_controller;
 
 import com.example.hotelsimpleservice.dto.CustomerDto;
+import com.example.hotelsimpleservice.emailNotifications.MailSender;
 import com.example.hotelsimpleservice.model.Customer;
 import com.example.hotelsimpleservice.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,16 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
+    private final String DELETED_ACCOUNT_MESSAGE ="You have deleted your account from our service, come back soon";
+    private final String GET_CUSTOMER = "Link for get customer by login";
+    private final String DELETE_CUSTOMER = "Link for delete customer";
     private final CustomerService customerService;
-/*    private final MailSender mailSender;*/
+    private final MailSender javaMailSender;
 
     @Autowired
-    public CustomerController(CustomerService customerService/*, MailSender mailSender*/) {
+    public CustomerController(CustomerService customerService, MailSender javaMailSender) {
         this.customerService = customerService;
-/*        this.mailSender = mailSender;*/
+        this.javaMailSender = javaMailSender;
     }
 
     @GetMapping
@@ -37,52 +41,25 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<CustomerDto> create(@RequestBody CustomerDto user) {
         customerService.save(user);
-    /*    mailSender.sendEmail(user.getEmail(), "message", "Congratilations!");*/
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.save(user));
     }
 
-/*    private void sendEmail(String emailTo, String emailSubject, String emailText) throws MessagingException {
-        String username = "vadzimkuzmenkatest@mail.ru"; // ваш email
-        String password = "OV8RnBpa6vpmdBmoanWQ"; // пароль к вашему email
-
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
-
-        Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(username));
-        message.setRecipients(Message.RecipientType.TO,
-                InternetAddress.parse(emailTo));
-        message.setSubject(emailSubject);
-        message.setText(emailText);
-
-        Transport.send(message);
-    }*/
-
     @GetMapping("/{login}")
     ResponseEntity<Optional<Customer>> findByLogin(@PathVariable String login) {
-        generateResponseWithLinks(customerService.readByName(login).get());
-        return ResponseEntity.of(Optional.of(customerService.readByName(login)));
+        generateResponseWithLinks(customerService.findByLogin(login).get());
+        return ResponseEntity.of(Optional.of(customerService.findByLogin(login)));
     }
 
     @DeleteMapping("/{login}")
     public ResponseEntity<Customer> deleteCustomer (@PathVariable String login) {
         customerService.delete(login);
+        javaMailSender.sendEmail(customerService.findByLogin(login).get().getEmail(), "message", DELETED_ACCOUNT_MESSAGE);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
     public Customer generateResponseWithLinks(Customer customer) {
-        customer.add(linkTo(methodOn(CustomerController.class).findByLogin(customer.getLogin())).withRel("Link for get customer by login"));
-        customer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(customer.getLogin())).withRel("Link for delete customer"));
+        customer.add(linkTo(methodOn(CustomerController.class).findByLogin(customer.getLogin())).withRel(GET_CUSTOMER));
+        customer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(customer.getLogin())).withRel(DELETE_CUSTOMER));
         return customer;
     }
 

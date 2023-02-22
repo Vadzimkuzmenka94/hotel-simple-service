@@ -1,4 +1,4 @@
-package com.example.hotelsimpleservice.controller;
+package com.example.hotelsimpleservice.controller.entity_controller;
 
 import com.example.hotelsimpleservice.model.Room;
 import com.example.hotelsimpleservice.service.RoomService;
@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,6 +17,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/rooms")
 public class RoomController {
+    private final String GET_ROOM = "Link for get room";
+    private final String UPDATE_ROOM = "Link for update room";
     private final RoomService roomService;
 
     @Autowired
@@ -30,13 +31,6 @@ public class RoomController {
         generateResponseWithLinks(roomService.findByRoomNumber(id));
         return ResponseEntity.of(Optional.of(roomService.findByRoomNumber(id)));
     }
-
-    @GetMapping("status/{status}")
-    public ResponseEntity<List<Room>> findFreeRoom(@PathVariable boolean status) {
-        List<Room> rooms = roomService.findFreeNumber(status);
-               addLinkToEntity(rooms);
-        return ResponseEntity.ok().body(rooms);
-    } // удалить этот метод
 
     @GetMapping("/find")
     public ResponseEntity<List<Room>> findRoomByParameter(@RequestParam(required = false) Boolean wifi,
@@ -65,8 +59,8 @@ public class RoomController {
     }
 
     public Room generateResponseWithLinks(Room room) {
-        room.add(linkTo(methodOn(RoomController.class).findById(room.getRoomNumber())).withRel("Link for get rom"));
-        room.add(linkTo(methodOn(RoomController.class).update(room, room.getRoomNumber())).withRel("Link for update room"));
+        room.add(linkTo(methodOn(RoomController.class).findById(room.getRoomNumber())).withRel(GET_ROOM));
+        room.add(linkTo(methodOn(RoomController.class).update(room, room.getRoomNumber())).withRel(UPDATE_ROOM));
         return room;
     }
 
