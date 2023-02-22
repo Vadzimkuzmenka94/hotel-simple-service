@@ -13,8 +13,6 @@ public interface RoomService {
 
     Room findByRoomNumber(int number);
 
-    List<Room> findFreeNumber (boolean free);
-
     List<Room> findRoomByDifferentParameters(Boolean wifi, Boolean free_parking, Boolean conditioner, Boolean fridge,
                                              Boolean no_smoking_room, Boolean breakfast, Boolean free);
 

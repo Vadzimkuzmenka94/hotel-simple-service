@@ -1,4 +1,3 @@
-
 package com.example.hotelsimpleservice.emailNotifications;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +25,6 @@ public class MailSender {
         simpleMailMessage.setTo(emailTo);
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(message);
-
         javaMailSender.send(simpleMailMessage);
     }
 }
-

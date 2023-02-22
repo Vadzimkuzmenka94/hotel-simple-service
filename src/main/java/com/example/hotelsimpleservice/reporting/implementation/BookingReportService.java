@@ -1,12 +1,12 @@
-package com.example.hotelsimpleservice.reporting.Implementation;
+package com.example.hotelsimpleservice.reporting.implementation;
 
 import com.example.hotelsimpleservice.model.Booking;
 import com.example.hotelsimpleservice.reporting.ReportService;
 import com.example.hotelsimpleservice.repository.BookingRepository;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,17 @@ import java.util.List;
 
 @Service
 public class BookingReportService implements ReportService {
+    private final String ID = "id";
+    private final String NAME = "name";
+    private final String DURATION = "duration";
+    private final String COST = "cost";
+    private final String CURRENCY = "currency";
+    private final String ROOM_NUMBER = "room_number";
+    private final String CUSTOMER_ID = "customer_id";
+    private final String DATE = "date";
+    private final String START_BOOKING = "start_booking";
+    private final String FINISH_BOOKING = "finish_booking";
+    private final String SHEET_NAME = "Bookings info";
     private final BookingRepository bookingRepository;
 
     @Autowired
@@ -24,23 +35,13 @@ public class BookingReportService implements ReportService {
         this.bookingRepository = bookingRepository;
     }
 
-    public void generateExcel(HttpServletResponse response) throws IOException {
+    public void generateExcel(HttpServletResponse response) throws IOException { // вынести в абстрактный класс
         try (ServletOutputStream outputStream = response.getOutputStream();
 
              HSSFWorkbook workbook = new HSSFWorkbook()) {
             List<Booking> bookings = (List<Booking>) bookingRepository.findAll();
-            HSSFSheet sheet = workbook.createSheet("Bookings info");
-            HSSFRow row = sheet.createRow(0);
-            row.createCell(0).setCellValue("id");
-            row.createCell(1).setCellValue("name");
-            row.createCell(2).setCellValue("duration");
-            row.createCell(3).setCellValue("cost");
-            row.createCell(4).setCellValue("currency");
-            row.createCell(5).setCellValue("room_number");
-            row.createCell(6).setCellValue("customer_id");
-            row.createCell(7).setCellValue("date");
-            row.createCell(8).setCellValue("start_booking");
-            row.createCell(9).setCellValue("finish_booking");
+            HSSFSheet sheet = workbook.createSheet(SHEET_NAME);
+            Row row = createRow(sheet, 0, ID, NAME, DURATION, COST, CURRENCY, ROOM_NUMBER, CUSTOMER_ID, DATE, START_BOOKING, FINISH_BOOKING);
             HSSFFont font = workbook.createFont();
             font.setBold(true);
             HSSFCellStyle style = workbook.createCellStyle();
@@ -66,5 +67,15 @@ public class BookingReportService implements ReportService {
             }
             workbook.write(outputStream);
         }
+    }
+
+    @Override
+    public Row createRow(HSSFSheet sheet, int rowNum, Object... data) {
+        HSSFRow row = sheet.createRow(rowNum);
+        int cellNum = 0;
+        for (Object cellData : data) {
+            row.createCell(cellNum++).setCellValue(String.valueOf(cellData));
+        }
+        return row;
     }
 }

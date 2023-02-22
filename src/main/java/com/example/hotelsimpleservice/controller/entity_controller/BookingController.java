@@ -1,4 +1,4 @@
-package com.example.hotelsimpleservice.controller;
+package com.example.hotelsimpleservice.controller.entity_controller;
 
 import com.example.hotelsimpleservice.model.Booking;
 import com.example.hotelsimpleservice.service.BookingService;
@@ -17,6 +17,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/booking")
 public class BookingController {
+    private final String GET_BOOKING = "Link for get booking";
+    private final String UPDATE_BOOKING = "Link for update booking";
+    private final String DELETE_BOOKING = "Link for delete booking";
     private final BookingService bookingService;
     private final RoomService roomService;
 
@@ -70,9 +73,9 @@ public class BookingController {
     }
 
     public Booking generateResponseWithLinks(Booking booking) {
-        booking.add(linkTo(methodOn(BookingController.class).getById(booking.getId())).withRel("Link for get booking"));
-        booking.add(linkTo(methodOn(BookingController.class).delete(booking.getId())).withRel("Link for delete booking"));
-        booking.add(linkTo(methodOn(BookingController.class).update(booking, booking.getId())).withRel("Link for update booking"));
+        booking.add(linkTo(methodOn(BookingController.class).getById(booking.getId())).withRel(GET_BOOKING));
+        booking.add(linkTo(methodOn(BookingController.class).delete(booking.getId())).withRel(DELETE_BOOKING));
+        booking.add(linkTo(methodOn(BookingController.class).update(booking, booking.getId())).withRel(UPDATE_BOOKING));
         return booking;
     }
 
