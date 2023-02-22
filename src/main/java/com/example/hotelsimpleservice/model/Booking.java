@@ -1,6 +1,5 @@
 package com.example.hotelsimpleservice.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 

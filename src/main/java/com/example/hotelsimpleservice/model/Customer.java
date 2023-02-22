@@ -1,4 +1,3 @@
-
 package com.example.hotelsimpleservice.model;
 
 import lombok.*;

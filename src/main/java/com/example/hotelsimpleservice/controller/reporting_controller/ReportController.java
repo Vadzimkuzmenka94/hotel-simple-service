@@ -1,8 +1,8 @@
-package com.example.hotelsimpleservice.controller;
+package com.example.hotelsimpleservice.controller.reporting_controller;
 
-import com.example.hotelsimpleservice.reporting.Implementation.BookingReportService;
-import com.example.hotelsimpleservice.reporting.Implementation.CustomerReportService;
-import com.example.hotelsimpleservice.reporting.Implementation.RoomReportService;
+import com.example.hotelsimpleservice.reporting.implementation.BookingReportService;
+import com.example.hotelsimpleservice.reporting.implementation.CustomerReportService;
+import com.example.hotelsimpleservice.reporting.implementation.RoomReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,6 @@ public class ReportController {
         this.bookingReportService = bookingReportService;
         this.roomReportService = roomReportService;
     }
-
 
     @GetMapping("/booking_exel")
     public void generateBookingExelReport(HttpServletResponse response) throws IOException {

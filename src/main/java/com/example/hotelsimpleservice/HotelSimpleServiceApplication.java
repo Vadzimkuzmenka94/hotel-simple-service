@@ -16,5 +16,4 @@ public class HotelSimpleServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(HotelSimpleServiceApplication.class, args);
     }
-
 }

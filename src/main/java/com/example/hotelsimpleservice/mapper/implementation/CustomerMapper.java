@@ -22,22 +22,6 @@ public class CustomerMapper implements Mapper<Customer, CustomerDto> {
             customerDto.setBookings(entity.getBookings());
         return customerDto;
     }
-/*
-    public CustomerDto mapToDto(Customer entity) {
-        CustomerDto customerDto = CustomerDto.builder()
-                .id(entity.getCustomer_id())
-                .login(entity.getLogin())
-                .password(entity.getPassword())
-                .role(entity.getRole())
-                .name(entity.getName())
-                .surname(entity.getSurname())
-                .email(entity.getEmail())
-                .cardNumber(entity.getCardNumber())
-                .bookings(entity.getBookings())
-                .build();
-        return customerDto;
-        чат предложил убрать проверку букингов
-    }*/
 
     @Override
     public Customer mapToEntity(CustomerDto dto) {
@@ -56,5 +40,3 @@ public class CustomerMapper implements Mapper<Customer, CustomerDto> {
         return customer;
     }
 }
-
-

@@ -2,7 +2,6 @@
 package com.example.hotelsimpleservice.service;
 
 import com.example.hotelsimpleservice.dto.CustomerDto;
-import com.example.hotelsimpleservice.model.Booking;
 import com.example.hotelsimpleservice.model.Customer;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +12,9 @@ import java.util.Optional;
 public interface CustomerService {
     CustomerDto save(CustomerDto customerDto);
 
-    Optional<Customer> readByName(String login);
+    Optional<Customer> findByLogin(String login);
 
     void delete (String login);
 
     List<Customer> findAll();
-
 }
-

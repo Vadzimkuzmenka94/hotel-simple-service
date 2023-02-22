@@ -18,10 +18,10 @@ import java.util.Optional;
 
 @Service
 public class BookingServiceImplementation implements BookingService {
-    private static final String BYN_CURRENCY = "BYN";
-    private static final String LARI_CURRENCY = "LARI";
-    private static final Double BYN_TO_DOLLAR_EXCHANGE_RATE = 2.63;
-    private static final Double LARI_TO_DOLLAR_EXCHANGE_RATE = 2.51;
+    private final String BYN_CURRENCY = "BYN";
+    private final String LARI_CURRENCY = "LARI";
+    private final Double BYN_TO_DOLLAR_EXCHANGE_RATE = 2.63;
+    private final Double LARI_TO_DOLLAR_EXCHANGE_RATE = 2.51;
     private final BookingRepository bookingRepository;
     private final RoomService roomService;
     private final BookingValidator bookingValidator;

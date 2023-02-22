@@ -1,7 +1,6 @@
 package com.example.hotelsimpleservice.repository;
 
 import com.example.hotelsimpleservice.model.Booking;
-import com.example.hotelsimpleservice.model.Room;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

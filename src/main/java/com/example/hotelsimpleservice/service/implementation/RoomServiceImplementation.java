@@ -40,11 +40,6 @@ public class RoomServiceImplementation implements RoomService {
     }
 
     @Override
-    public List<Room> findFreeNumber(boolean free) {
-        return roomRepository.findFreeNumber(free);
-    }
-
-    @Override
     public List<Room> findRoomByDifferentParameters(Boolean wifi, Boolean free_parking,
                                                     Boolean conditioner, Boolean fridge, Boolean no_smoking_room,
                                                     Boolean breakfast, Boolean free) {
