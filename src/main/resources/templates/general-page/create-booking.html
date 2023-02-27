@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Страница регистрации</title>
+    <style type="text/css">
+        body {
+            background-image: url("https://cdn.georgiantravelguide.com/storage/files/batumi-achara-ghamis-batumi-batumi-adjara-night-in-batumi.jpg");
+            background-size: auto;
+        }
+        form {
+            margin: 0 auto;
+            width: 500px;
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+        }
+        input[type="text"], input[type="password"], input[type="number"], input[type="datetime-local"] {
+            background-color: transparent;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: white;
+        }
+        input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="datetime-local"]:focus {
+            outline: none;
+            border: 2px solid #2196F3;
+        }
+        input[type="submit"] {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #0D47A1;
+        }
+        .error-message {
+            color: red;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        legend {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: floralwhite;
+        }
+    </style>
+</head>
+<body>
+<form id="create-booking-form" method="POST" action="/api/bookings/create-booking">
+    <legend>Введите данные о бронировании</legend>
+    <label for="username">Введите имя пользователя:</label>
+    <input type="text" name="name" id="username" placeholder="NAME" required>
+    <div class="error-message" id="username-error"></div>
+
+    <label for="duration">Введите длительность:</label>
+    <input type="number" name="duration" id="duration" placeholder="DURATION" required>
+    <div class="error-message" id="duration-error"></div>
+
+    <label for="currency">Выберите валюту:</label>
+    <input type="text"  name="currency" id="currency" placeholder="CURRENCY" required>
+    <div class="error-message" id="currency-error"></div>
+
+    <label for="roomNumber">Номер комнаты:</label>
+    <input type="number" name="roomNumber" id="roomNumber" placeholder="ROOM NUMBER" required>
+    <div class="error-message" id="roomNumber-error"></div>
+
+    <label for="startBooking">Введите дату начала бронирования:</label>
+    <input type="datetime-local" name="startBooking" id="startBooking" placeholder="START BOOKING"/>
+    </center>
+    <div class="error-message" id="startBooking-error"></div>
+
+    <center>
+        <div class="form-actions">
+            <input type="submit" value="Создать"/>
+        </div>
+    </center>
+</form>

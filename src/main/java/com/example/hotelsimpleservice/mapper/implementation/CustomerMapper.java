@@ -17,9 +17,10 @@ public class CustomerMapper implements Mapper<Customer, CustomerDto> {
                 .name(entity.getName())
                 .surname(entity.getSurname())
                 .email(entity.getEmail())
-                .cardNumber(entity.getCardNumber()).build();
-        if (!(entity.getBookings() == null))
-            customerDto.setBookings(entity.getBookings());
+                .cardNumber(entity.getCardNumber())
+                .bookings(entity.getBookings())
+                .build();
+
         return customerDto;
     }
 

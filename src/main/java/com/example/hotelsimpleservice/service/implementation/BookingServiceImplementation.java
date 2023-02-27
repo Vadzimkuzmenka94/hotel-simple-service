@@ -5,9 +5,12 @@ import com.example.hotelsimpleservice.exceptions.ErrorCode;
 import com.example.hotelsimpleservice.model.Booking;
 import com.example.hotelsimpleservice.repository.BookingRepository;
 import com.example.hotelsimpleservice.service.BookingService;
+import com.example.hotelsimpleservice.service.CustomerService;
 import com.example.hotelsimpleservice.service.RoomService;
 import com.example.hotelsimpleservice.validator.BookingValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -26,14 +29,16 @@ public class BookingServiceImplementation implements BookingService {
     private final RoomService roomService;
     private final BookingValidator bookingValidator;
     private final EntityManager entityManager;
+    private final CustomerService customerService;
 
     @Autowired
     public BookingServiceImplementation(BookingRepository bookingRepository, RoomService roomService,
-                                        BookingValidator bookingValidator, EntityManager entityManager) {
+                                        BookingValidator bookingValidator, EntityManager entityManager, CustomerService customerService) {
         this.bookingRepository = bookingRepository;
         this.roomService = roomService;
         this.bookingValidator = bookingValidator;
         this.entityManager = entityManager;
+        this.customerService = customerService;
     }
 
     @Override
@@ -41,6 +46,8 @@ public class BookingServiceImplementation implements BookingService {
         bookingValidator.validate(booking);
         roomService.takeRoom(booking.getRoomNumber());
         calculateFinalPrice(booking);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        booking.setCustomer(customerService.findByLogin(authentication.getName()).get());
         return bookingRepository.save(booking);
     }
 

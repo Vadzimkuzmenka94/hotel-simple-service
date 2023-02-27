@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -27,9 +28,6 @@ public class RoomServiceImplementation implements RoomService {
 
     @Override
     public Room createRoom(Room room) {
-        if (roomRepository.findByRoomNumber(room.getRoomNumber()) != null) {
-            throw new AppException(ErrorCode.ROOM_ALREADY_EXIST);
-        }
         return roomRepository.save(room);
     }
 

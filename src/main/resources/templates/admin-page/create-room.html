@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Страница регистрации</title>
+    <style type="text/css">
+        body {
+            background-image: url("https://cdn.georgiantravelguide.com/storage/files/batumi-achara-ghamis-batumi-batumi-adjara-night-in-batumi.jpg");
+            background-size: auto;
+        }
+        form {
+            margin: 0 auto;
+            width: 500px;
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+        }
+        input[type="text"], input[type="password"], input[type="number"], input[type="datetime-local"] {
+            background-color: transparent;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: white;
+        }
+        input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus, input[type="datetime-local"]:focus {
+            outline: none;
+            border: 2px solid #2196F3;
+        }
+        input[type="submit"] {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #0D47A1;
+        }
+        .error-message {
+            color: red;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        legend {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: floralwhite;
+        }
+    </style>
+</head>
+<body>
+<form id="create-room-form" method="POST" action="/api/admin/create-room">
+    <legend>Введите данные о номере</legend>
+
+    <label for="wifi">Введите сведения о wifi:</label>
+    <input type="boolean" name="wifi" id="wifi" placeholder="wifi" value="true" required>
+    <div class="error-message" id="wifi-error"></div>
+
+    <label for="freeParking">Введите данные о парковке:</label>
+    <input type="boolean" name="freeParking" id="freeParking" placeholder="Parking" value="true" required>
+    <div class="error-message" id="freeParking-error"></div>
+
+    <label for="conditioner">Выберите сведения о кондиционере:</label>
+    <input type="boolean" name="condition" id="conditioner" placeholder="Conditioner" value="true" required>
+    <div class="error-message" id="conditioner-error"></div>
+
+    <label for="fridge">Выберите сведения о холодильнике:</label>
+    <input type="boolean"  name="fridge" id="fridge" placeholder="Fridge" value="true"  required>
+
+    <label for="noSmokingRoom">Выберите сведения о статусе для курящих:</label>
+    <input type="boolean"  name="noSmokingRoom" id="noSmokingRoom" placeholder="No smoking room" value="true" required>
+    <div class="error-message" id="noSmokingRoom-error"></div>
+
+
+    <label for="breakfast">Выберите сведения о завтраке:</label>
+    <input type="boolean"  name="breakfast" id="breakfast" placeholder="Breakfast" value="true" required>
+    <div class="error-message" id="breakfast-error"></div>
+
+    <label for="cost">Введите сведения о стоимости:</label>
+    <input type="number"  name="cost" id="cost" placeholder="Cost" required>
+    <div class="error-message" id="cost-error"></div>
+
+    <label for="comment">Введите комментарий:</label>
+    <input type="text"  name="comment" id="comment" placeholder="Сomment" required>
+    <div class="error-message" id="comment-error"></div>
+
+    <label for="numberOfBeds">введите количество комнат:</label>
+    <input type="number" name="numberOfBeds" id="numberOfBeds" placeholder="Number of beds" required>
+    <div class="error-message" id="numberOfBeds-error"></div>
+
+    <label for="free">введите свободна ли комната сейчас:</label>
+    <input type="boolean" name="free" id="free" placeholder="Free" value="true" required>
+    <div class="error-message" id="free-error"></div>
+
+    <label for="roomNumber">введите номер комнаты:</label>
+    <input type="number" name="roomNumber" id="roomNumber" placeholder="Room number" required>
+    <div class="error-message" id="roomNumber-error"></div>
+
+    <center>
+        <div class="form-actions">
+            <input type="submit" value="Создать"/>
+        </div>
+    </center>
+</form>

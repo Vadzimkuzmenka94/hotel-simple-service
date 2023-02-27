@@ -34,8 +34,8 @@ public class Customer extends RepresentationModel <Customer>  {
     private String email;
     @Column(name = "card_number")
     private String cardNumber;
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    Set<Booking> bookings;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Set<Booking> bookings;
 
     @PrePersist
     public void prePersist() {

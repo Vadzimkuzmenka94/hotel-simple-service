@@ -1,6 +1,10 @@
 package com.example.hotelsimpleservice.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -8,7 +12,7 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name = "booking")
+@Table(name = "booking", schema = "public")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -30,12 +34,13 @@ public class Booking extends RepresentationModel <Booking> {
     @Column(name = "room_number")
     private int roomNumber;
     @Column(name = "start_booking")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startBooking;
     @Column(name = "finish_booking")
     private LocalDateTime finishBooking;
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    Customer customer;
+    private Customer customer;
 
     @PrePersist
     public void prePersist() {

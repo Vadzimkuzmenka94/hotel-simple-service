@@ -18,7 +18,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/customers")
-public class CustomerController {
+public class CustomerRestController {
     private final String DELETED_ACCOUNT_MESSAGE ="You have deleted your account from our service, come back soon";
     private final String GET_CUSTOMER = "Link for get customer by login";
     private final String DELETE_CUSTOMER = "Link for delete customer";
@@ -26,7 +26,7 @@ public class CustomerController {
     private final MailSender javaMailSender;
 
     @Autowired
-    public CustomerController(CustomerService customerService, MailSender javaMailSender) {
+    public CustomerRestController(CustomerService customerService, MailSender javaMailSender) {
         this.customerService = customerService;
         this.javaMailSender = javaMailSender;
     }
@@ -58,8 +58,8 @@ public class CustomerController {
     }
 
     public Customer generateResponseWithLinks(Customer customer) {
-        customer.add(linkTo(methodOn(CustomerController.class).findByLogin(customer.getLogin())).withRel(GET_CUSTOMER));
-        customer.add(linkTo(methodOn(CustomerController.class).deleteCustomer(customer.getLogin())).withRel(DELETE_CUSTOMER));
+        customer.add(linkTo(methodOn(CustomerRestController.class).findByLogin(customer.getLogin())).withRel(GET_CUSTOMER));
+        customer.add(linkTo(methodOn(CustomerRestController.class).deleteCustomer(customer.getLogin())).withRel(DELETE_CUSTOMER));
         return customer;
     }
 

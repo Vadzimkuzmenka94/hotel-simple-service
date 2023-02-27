@@ -1,12 +1,28 @@
 package com.example.hotelsimpleservice.controller.admin_page_controller;
 
+import com.example.hotelsimpleservice.model.Booking;
+import com.example.hotelsimpleservice.model.Room;
+import com.example.hotelsimpleservice.service.RoomService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    private final String ROOM_ATTRIBUTE = "room";
+    private final RoomService roomService;
+
+    @Autowired
+    public AdminController(RoomService roomService) {
+        this.roomService = roomService;
+    }
+
+
     @GetMapping("/show-all-actions")
     public String registrationPage() {
         return "admin-page/show-all-actions";
@@ -50,5 +66,23 @@ public class AdminController {
     @GetMapping("/find-customer-by-id")
     public String showCustomerById() {
         return "admin-page/find-customer-by-id";
+    }
+
+    @GetMapping("/create-room")
+    public String createBookingPage(Model model) {
+        model.addAttribute(ROOM_ATTRIBUTE, new Room());
+        return "admin-page/create-room";
+    }
+
+
+    @PostMapping("/create-room")
+    public String performCreatingRoom(@ModelAttribute("room") Room room) {
+        roomService.createRoom(room);
+        return "redirect:/admin/successful-create-room";
+    }
+
+    @GetMapping("/successful-create-room")
+    public String SuccessfulRegistrationPage() {
+        return "admin-page/successful-create-room";
     }
 }

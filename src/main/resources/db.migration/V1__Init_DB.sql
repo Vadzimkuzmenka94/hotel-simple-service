@@ -40,7 +40,7 @@ create table booking (
                          name varchar(255),
                          room_number int4,
                          start_booking timestamp,
-                         customer_id int8,
+                         customer_id int,
                          primary key (id)
 );
 

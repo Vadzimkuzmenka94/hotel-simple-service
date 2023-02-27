@@ -16,13 +16,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/rooms")
-public class RoomController {
+public class RoomRestController {
     private final String GET_ROOM = "Link for get room";
     private final String UPDATE_ROOM = "Link for update room";
     private final RoomService roomService;
 
     @Autowired
-    public RoomController(RoomService roomService) {
+    public RoomRestController(RoomService roomService) {
         this.roomService = roomService;
     }
 
@@ -59,8 +59,8 @@ public class RoomController {
     }
 
     public Room generateResponseWithLinks(Room room) {
-        room.add(linkTo(methodOn(RoomController.class).findById(room.getRoomNumber())).withRel(GET_ROOM));
-        room.add(linkTo(methodOn(RoomController.class).update(room, room.getRoomNumber())).withRel(UPDATE_ROOM));
+        room.add(linkTo(methodOn(RoomRestController.class).findById(room.getRoomNumber())).withRel(GET_ROOM));
+        room.add(linkTo(methodOn(RoomRestController.class).update(room, room.getRoomNumber())).withRel(UPDATE_ROOM));
         return room;
     }
 

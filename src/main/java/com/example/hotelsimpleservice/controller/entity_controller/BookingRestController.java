@@ -16,7 +16,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/booking")
-public class BookingController {
+public class BookingRestController {
     private final String GET_BOOKING = "Link for get booking";
     private final String UPDATE_BOOKING = "Link for update booking";
     private final String DELETE_BOOKING = "Link for delete booking";
@@ -24,19 +24,19 @@ public class BookingController {
     private final RoomService roomService;
 
     @Autowired
-    public BookingController(BookingService bookingService, RoomService roomService) {
+    public BookingRestController(BookingService bookingService, RoomService roomService) {
         this.bookingService = bookingService;
         this.roomService = roomService;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Booking> getById(@PathVariable Long id) {
+    public ResponseEntity<Booking> findById(@PathVariable Long id) {
         generateResponseWithLinks(bookingService.findById(id).get());
         return ResponseEntity.of(bookingService.findById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<Booking>> getAll() {
+    public ResponseEntity<List<Booking>> findAll() {
         List<Booking> bookings = bookingService.findAll();
         addLinkToEntity(bookings);
         return ResponseEntity.ok().body(bookings);
@@ -73,9 +73,9 @@ public class BookingController {
     }
 
     public Booking generateResponseWithLinks(Booking booking) {
-        booking.add(linkTo(methodOn(BookingController.class).getById(booking.getId())).withRel(GET_BOOKING));
-        booking.add(linkTo(methodOn(BookingController.class).delete(booking.getId())).withRel(DELETE_BOOKING));
-        booking.add(linkTo(methodOn(BookingController.class).update(booking, booking.getId())).withRel(UPDATE_BOOKING));
+        booking.add(linkTo(methodOn(BookingRestController.class).findById(booking.getId())).withRel(GET_BOOKING));
+        booking.add(linkTo(methodOn(BookingRestController.class).delete(booking.getId())).withRel(DELETE_BOOKING));
+        booking.add(linkTo(methodOn(BookingRestController.class).update(booking, booking.getId())).withRel(UPDATE_BOOKING));
         return booking;
     }
 
