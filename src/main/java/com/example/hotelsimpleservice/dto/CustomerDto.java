@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Set;
-@ToString
 @Getter
 @Setter
 @AllArgsConstructor

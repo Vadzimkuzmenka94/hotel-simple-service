@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Set;
-
-@ToString
 @Getter
 @Setter
 @AllArgsConstructor
