@@ -48,6 +48,7 @@ public class BookingServiceImplementation implements BookingService {
         calculateFinalPrice(booking);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         booking.setCustomer(customerService.findByLogin(authentication.getName()).get());
+        booking.setName(authentication.getName());
         return bookingRepository.save(booking);
     }
 

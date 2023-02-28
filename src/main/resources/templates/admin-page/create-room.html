@@ -8,11 +8,14 @@
             background-size: auto;
         }
         form {
-            margin: 0 auto;
-            width: 500px;
-            border: 2px solid #ccc;
+            margin-top: 50px;
+            width: 400px;
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px #ccc;
+            background: rgba(0,0,0,0.5);
+            margin-left: auto;
+            margin-right: auto;
         }
         label {
             display: block;
@@ -67,50 +70,49 @@
 <body>
 <form id="create-room-form" method="POST" action="/api/admin/create-room">
     <legend>Введите данные о номере</legend>
+    <input type="hidden" name="wifi" value="false">
+    <label for="wifi">Wi-Fi:</label>
+    <input type="checkbox" name="wifi" id="wifi" value="true" onclick="document.getElementById('wifi').value = this.checked ? 'true' : 'false'">  <br>
 
-    <label for="wifi">Введите сведения о wifi:</label>
-    <input type="boolean" name="wifi" id="wifi" placeholder="wifi" value="true" required>
-    <div class="error-message" id="wifi-error"></div>
+    <input type="hidden" name="freeParking" value="false">
+    <label for="freeParking">Free Parking:</label>
+    <input type="checkbox" name="freeParking" id="freeParking" value="true" onclick="document.getElementById('freeParking').value = this.checked ? 'true' : 'false'"><br>
 
-    <label for="freeParking">Введите данные о парковке:</label>
-    <input type="boolean" name="freeParking" id="freeParking" placeholder="Parking" value="true" required>
-    <div class="error-message" id="freeParking-error"></div>
+    <input type="hidden" name="conditioner" value="false">
+    <label for="conditioner">Conditioner:</label>
+    <input type="checkbox" name="conditioner" id="conditioner" value="true" onclick="document.getElementById('conditioner').value = this.checked ? 'true' : 'false'"><br>
 
-    <label for="conditioner">Выберите сведения о кондиционере:</label>
-    <input type="boolean" name="condition" id="conditioner" placeholder="Conditioner" value="true" required>
-    <div class="error-message" id="conditioner-error"></div>
+    <input type="hidden" name="fridge" value="false">
+    <label for="fridge">Fridge:</label>
+    <input type="checkbox" name="fridge" id="fridge" value="true" onclick="document.getElementById('fridge').value = this.checked ? 'true' : 'false'"><br>
 
-    <label for="fridge">Выберите сведения о холодильнике:</label>
-    <input type="boolean"  name="fridge" id="fridge" placeholder="Fridge" value="true"  required>
+    <input type="hidden" name="noSmokingRoom" value="false">
+    <label for="noSmokingRoom">No Smoking Room:</label>
+    <input type="checkbox" name="noSmokingRoom" id="noSmokingRoom" value="true" onclick="document.getElementById('noSmokingRoom').value = this.checked ? 'true' : 'false'"><br>
 
-    <label for="noSmokingRoom">Выберите сведения о статусе для курящих:</label>
-    <input type="boolean"  name="noSmokingRoom" id="noSmokingRoom" placeholder="No smoking room" value="true" required>
-    <div class="error-message" id="noSmokingRoom-error"></div>
+    <input type="hidden" name="breakfast" value="false">
+    <label for="breakfast">Breakfast:</label>
+    <input type="checkbox" name="breakfast" id="breakfast" value="true" onclick="document.getElementById('breakfast').value = this.checked ? 'true' : 'false'"><br>
 
+    <input type="hidden" name="free" value="false">
+    <label for="free">Free:</label>
+    <input type="checkbox" name="free" id="free" value="true" onclick="document.getElementById('free').value = this.checked ? 'true' : 'false'"><br>
 
-    <label for="breakfast">Выберите сведения о завтраке:</label>
-    <input type="boolean"  name="breakfast" id="breakfast" placeholder="Breakfast" value="true" required>
-    <div class="error-message" id="breakfast-error"></div>
+    <label for="roomNumber">введите номер комнаты:</label>
+    <input type="number" name="roomNumber" id="roomNumber" placeholder="Room number" required>
+    <div class="error-message" id="roomNumber-error"></div>
 
     <label for="cost">Введите сведения о стоимости:</label>
     <input type="number"  name="cost" id="cost" placeholder="Cost" required>
     <div class="error-message" id="cost-error"></div>
 
-    <label for="comment">Введите комментарий:</label>
-    <input type="text"  name="comment" id="comment" placeholder="Сomment" required>
-    <div class="error-message" id="comment-error"></div>
-
     <label for="numberOfBeds">введите количество комнат:</label>
     <input type="number" name="numberOfBeds" id="numberOfBeds" placeholder="Number of beds" required>
     <div class="error-message" id="numberOfBeds-error"></div>
 
-    <label for="free">введите свободна ли комната сейчас:</label>
-    <input type="boolean" name="free" id="free" placeholder="Free" value="true" required>
-    <div class="error-message" id="free-error"></div>
-
-    <label for="roomNumber">введите номер комнаты:</label>
-    <input type="number" name="roomNumber" id="roomNumber" placeholder="Room number" required>
-    <div class="error-message" id="roomNumber-error"></div>
+    <label for="comment">Введите комментарий:</label>
+    <input type="text"  name="comment" id="comment" placeholder="Сomment" required>
+    <div class="error-message" id="comment-error"></div>
 
     <center>
         <div class="form-actions">

@@ -5,13 +5,14 @@ import com.example.hotelsimpleservice.model.Booking;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.util.List;
 import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode
+
 public class CustomerDto extends RepresentationModel<CustomerDto> {
     private Long id;
     private String login;
@@ -33,5 +34,20 @@ public class CustomerDto extends RepresentationModel<CustomerDto> {
         this.surname = surname;
         this.email = email;
         this.cardNumber = cardNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerDto{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", cardNumber='" + cardNumber + '\'' +
+                ", bookings=" + bookings +
+                '}';
     }
 }

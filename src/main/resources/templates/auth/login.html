@@ -11,7 +11,7 @@
             font-family: Arial, sans-serif;
         }
         form {
-            background-color: #fff;
+            background: rgba(0,0,0,0.5);
             max-width: 400px;
             margin: 0 auto;
             padding: 20px;
@@ -22,12 +22,14 @@
             font-size: 28px;
             font-weight: bold;
             margin-bottom: 20px;
+            color: white;
         }
         label {
             display: block;
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 10px;
+            color: white;
         }
         input[type="text"],
         input[type="password"] {
@@ -89,7 +91,6 @@
 <form action="http://localhost:8080/api/auth/registration">
     <button type="submit"> Зарегистрироваться </button>
 </form>
-
 <form th:action="@{/logout}" th:method="POST">
     <input type="submit" value="Выйти из аккаунта"/>
 </form>
