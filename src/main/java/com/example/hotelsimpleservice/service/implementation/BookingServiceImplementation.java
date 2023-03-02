@@ -9,6 +9,7 @@ import com.example.hotelsimpleservice.service.CustomerService;
 import com.example.hotelsimpleservice.service.RoomService;
 import com.example.hotelsimpleservice.validator.BookingValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -52,15 +53,35 @@ public class BookingServiceImplementation implements BookingService {
         return bookingRepository.save(booking);
     }
 
+    /**
+     * Method for find booking by id.
+     *
+     * @param id
+     * @return booking by id, but if user don't administrator, then return first current user's booking .
+     */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole ('ROLE_USER')")
     @Override
     public Optional<Booking> findById(Long id) {
+        if (!isAdmin()) {
+            return Optional.ofNullable(findByName(getNameFromAuthentication()).get(0));
+        }
         return Optional.of(bookingRepository.findById(id).
                 orElseThrow(() -> new AppException(ErrorCode.BOOKING_NOT_FOUND)));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public List<Booking> findAll() {
         return (List<Booking>) bookingRepository.findAll();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @Override
+    public List<Booking> findByName(String name) {
+        if (isAdmin()) {
+            name = getNameFromAuthentication();
+        }
+        return bookingRepository.findByName(name);
     }
 
     @Transactional
@@ -70,7 +91,7 @@ public class BookingServiceImplementation implements BookingService {
         Booking bookingInDb = bookingRepository.findById(id).get();
         detachEntity(bookingInDb);
         bookingInDb.setId(booking.getId() != null ? booking.getId() : bookingInDb.getId());
-        bookingInDb.setName(booking.getName() != null ? booking.getName(): bookingInDb.getName());
+        bookingInDb.setName(booking.getName() != null ? booking.getName() : bookingInDb.getName());
         bookingInDb.setCost(booking.getCost() != null ? booking.getCost() : bookingInDb.getCost());
         bookingInDb.setDuration(booking.getDuration() != 0 ? booking.getDuration() : bookingInDb.getDuration());
         bookingInDb.setStartBooking(booking.getStartBooking() != null ? booking.getStartBooking() : bookingInDb.getStartBooking());
@@ -79,6 +100,7 @@ public class BookingServiceImplementation implements BookingService {
         return bookingInDb;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
     @Override
     public void deleteBooking(Long id) {
@@ -88,6 +110,7 @@ public class BookingServiceImplementation implements BookingService {
         entityManager.remove(bookingRepository.findById(id).get());
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public List<Booking> findBookingByDifferentParameters(String name, Integer duration, Double cost, String currency, Integer room_number) {
         return bookingRepository.findBookingByDifferentParameters(name, duration,cost,currency,room_number);
@@ -116,7 +139,6 @@ public class BookingServiceImplementation implements BookingService {
         booking.setCost(finalPrice);
     }
 
-
     public void detachEntity(Booking booking) {
         checkingExistenceRoom(booking);
         entityManager.detach(booking);
@@ -126,5 +148,15 @@ public class BookingServiceImplementation implements BookingService {
         if (booking == null) {
             throw new AppException(ErrorCode.BOOKING_NOT_FOUND);
         }
+    }
+
+    private boolean isAdmin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    private String getNameFromAuthentication () {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

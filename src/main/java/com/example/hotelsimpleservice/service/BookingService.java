@@ -15,6 +15,8 @@ public interface BookingService {
 
     List<Booking> findAll();
 
+    List<Booking> findByName(String name);
+
     Booking updateBooking(Booking booking, Long id);
 
     void deleteBooking(Long id);

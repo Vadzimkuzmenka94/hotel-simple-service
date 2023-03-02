@@ -5,24 +5,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final String LOGIN_PAGE = "/auth/login";
     private final String REGISTRATION_PAGE = "/auth/registration";
     private final String SUCCESSFUL_REGISTRATION_PAGE = "/auth/successful-registration";
     private final String ERROR_PAGE = "/auth/successful-registration";
-    private final String SHOW_ALL_ACTIONS_PAGE = "/admin/show-all-actions";
+    private final String HOME_PAGE = "/admin/show-all-actions";
     private final String PROCESS_LOGIN = "/process_login";
     private final String LOGIN_ERROR = "/auth/login?error";
     private final String LOGOUT = "/logout";
     private final SecurityServiceImplementation securityServiceImplementation;
+    static final String ADMIN = "ROLE_ADMIN";
 
     @Autowired
     public SecurityConfig(SecurityServiceImplementation securityServiceImplementation) {
@@ -31,21 +36,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.
-                csrf().disable()
-                .authorizeRequests()
-                .antMatchers(LOGIN_PAGE, ERROR_PAGE, REGISTRATION_PAGE, SUCCESSFUL_REGISTRATION_PAGE)
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage(LOGIN_PAGE)
-                .loginProcessingUrl(PROCESS_LOGIN)
-                .defaultSuccessUrl(SHOW_ALL_ACTIONS_PAGE, true)
-                .failureUrl(LOGIN_ERROR)
-                .and()
-                .logout()
-                .logoutUrl(LOGOUT)
-                .logoutSuccessUrl(LOGIN_PAGE);
+            httpSecurity.
+                    csrf().disable()
+                    .authorizeRequests()
+                    .antMatchers(LOGIN_PAGE, ERROR_PAGE, REGISTRATION_PAGE, SUCCESSFUL_REGISTRATION_PAGE)
+                    .permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .formLogin().loginPage(LOGIN_PAGE)
+                    .loginProcessingUrl(PROCESS_LOGIN)
+                    .defaultSuccessUrl(HOME_PAGE, true)
+                    .failureUrl(LOGIN_ERROR)
+                    .and()
+                    .logout()
+                    .logoutUrl(LOGOUT)
+                    .logoutSuccessUrl(LOGIN_PAGE);
     }
 
     @Override

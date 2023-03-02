@@ -26,7 +26,23 @@ public interface BookingRepository extends CrudRepository <Booking, Long> {
             "  (:currency IS NULL OR booking.currency =:currency) AND  " +
             "  (:room_number IS NULL OR booking.room_number =:room_number) ";
 
+    String FIND_BOOKING_BY_NAME = "SELECT id, " +
+            "name, " +
+            "duration, " +
+            "cost, " +
+            "currency, " +
+            "room_number, " +
+            "customer_id, " +
+            "date, " +
+            "start_booking, " +
+            "finish_booking " +
+            " FROM booking WHERE " +
+            " booking.name =:name ";
+
     @Query(value = FIND_BOOKING_BY_PARAMETERS, nativeQuery = true)
     List<Booking> findBookingByDifferentParameters(String name, Integer duration, Double cost, String currency,
-                                             Integer room_number);
+                                                   Integer room_number);
+
+    @Query(value = FIND_BOOKING_BY_NAME, nativeQuery = true)
+    List<Booking> findByName(String name);
 }

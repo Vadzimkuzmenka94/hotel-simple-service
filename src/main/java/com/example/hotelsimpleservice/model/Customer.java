@@ -41,8 +41,6 @@ public class Customer extends RepresentationModel <Customer>  {
 
     @PrePersist
     public void prePersist() {
-        this.role = "USER";
+        this.role = "ROLE_USER";
     }
-
-
 }

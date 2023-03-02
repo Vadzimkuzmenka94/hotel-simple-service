@@ -1,4 +1,4 @@
-package com.example.hotelsimpleservice.controller.entity_controller;
+package com.example.hotelsimpleservice.controller.entity_rest_controller;
 
 import com.example.hotelsimpleservice.model.Booking;
 import com.example.hotelsimpleservice.service.BookingService;

@@ -1,8 +1,6 @@
 package com.example.hotelsimpleservice.controller.admin_page_controller;
 
 import com.example.hotelsimpleservice.model.Booking;
-import com.example.hotelsimpleservice.model.Customer;
-import com.example.hotelsimpleservice.model.Room;
 import com.example.hotelsimpleservice.service.BookingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,25 +23,25 @@ public class BookingAdminController {
     @GetMapping("/delete-booking")
     public String deleteBookingPage(Model model) {
         model.addAttribute(BOOKING_ATTRIBUTE, new Booking());
-        return "admin-page/delete-booking";
+        return "admin-page/booking/delete-booking";
     }
 
 
     @DeleteMapping("/delete-booking")
     public String performDeletingCustomer(@ModelAttribute(BOOKING_ATTRIBUTE) Booking booking) {
         bookingService.deleteBooking(booking.getId());
-        return "redirect:/admin/successful-delete-booking";
+        return "redirect:/admin/booking/successful-pages/successful-delete-booking";
     }
 
     @GetMapping("/successful-delete-booking")
     public String SuccessfulDeleteBookingPage() {
-        return "admin-page/successful-delete-booking";
+        return "admin-page/booking/successful-pages/successful-delete-booking";
     }
 
     @GetMapping("/find-booking")
     public String findBookingPage(Model model) {
         model.addAttribute(BOOKING_ATTRIBUTE, new Booking());
-        return "admin-page/find-booking-by-parameter";
+        return "admin-page/booking/find-booking-by-parameter";
     }
 
     @PostMapping(value = "/find-booking")

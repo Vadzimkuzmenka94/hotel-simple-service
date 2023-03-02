@@ -6,12 +6,12 @@ import com.example.hotelsimpleservice.model.Room;
 import com.example.hotelsimpleservice.repository.RoomRepository;
 import com.example.hotelsimpleservice.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -26,11 +26,13 @@ public class RoomServiceImplementation implements RoomService {
         this.entityManager = entityManager;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public Room createRoom(Room room) {
         return roomRepository.save(room);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public Room findByRoomNumber(int number) {
         checkingExistenceRoom(roomRepository.findByRoomNumber(number));
@@ -52,6 +54,7 @@ public class RoomServiceImplementation implements RoomService {
         roomRepository.takeRoom(number, TAKE_ROOM);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
     @Override
     public Room updateRoom(Room room, int id) {

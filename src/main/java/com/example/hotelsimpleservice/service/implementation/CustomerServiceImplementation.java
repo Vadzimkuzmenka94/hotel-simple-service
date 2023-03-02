@@ -10,6 +10,9 @@ import com.example.hotelsimpleservice.repository.CustomerRepository;
 import com.example.hotelsimpleservice.service.CustomerService;
 import com.example.hotelsimpleservice.validator.CustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -46,23 +49,50 @@ public class CustomerServiceImplementation implements CustomerService {
         return mapper.mapToDto(customerInDb);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole ('ROLE_USER')")
     @Override
     public Optional<Customer> findByLogin(String login) {
+        if (!isAdmin()) {
+            login = getNameFromAuthentication();
+        }
         return Optional.of(customerRepository.findByLogin(login).
                 orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND)));
     }
 
+    /**
+     * Method for delete customers, but is user not administrator, he can delete only yourself
+     * @param login
+     */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @Transactional
     @Override
     public void delete(String login) {
+        if (!isAdmin()) {
+          login = getNameFromAuthentication();
+        }
         if (customerRepository.findByLogin(login).isEmpty()) {
             throw new AppException(ErrorCode.USER_NOT_FOUND);
         }
         entityManager.remove(customerRepository.findByLogin(login).get());
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public List<Customer> findAll() {
         return customerRepository.findAll();
+    }
+
+    /**
+     * Method for check user role
+     * @return true / false
+     */
+    private boolean isAdmin() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    private String getNameFromAuthentication () {
+     return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

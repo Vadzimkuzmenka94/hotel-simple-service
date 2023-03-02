@@ -24,18 +24,18 @@ public class CustomerAdminController {
     @GetMapping("/delete-customer")
     public String deleteCustomerPage(Model model) {
         model.addAttribute(CUSTOMER_ATTRIBUTE, new Customer());
-        return "admin-page/delete-customer";
+        return "admin-page/customer/delete-customer";
     }
 
 
     @DeleteMapping("/delete-customer")
     public String performDeletingCustomer(@ModelAttribute(CUSTOMER_ATTRIBUTE) Customer customer) {
         customerService.delete(customer.getLogin());
-        return "redirect:/admin/successful-delete-customer";
+        return "redirect:/admin/customer/successful-pages/successful-delete-customer";
     }
 
     @GetMapping("/successful-delete-customer")
     public String SuccessfulRegistrationPage() {
-        return "admin-page/successful-delete-customer";
+        return "admin-page/customer/successful-pages/successful-delete-customer";
     }
 }
