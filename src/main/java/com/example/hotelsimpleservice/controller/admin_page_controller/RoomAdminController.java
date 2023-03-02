@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class RoomAdminController {
     private final String ROOM_ATTRIBUTE = "room";
     private final RoomService roomService;
 
     @Autowired
-    public AdminController(RoomService roomService) {
+    public RoomAdminController(RoomService roomService) {
         this.roomService = roomService;
     }
 
@@ -74,7 +74,6 @@ public class AdminController {
         return "admin-page/create-room";
     }
 
-
     @PostMapping("/create-room")
     public String performCreatingRoom(@ModelAttribute("room") Room room) {
         roomService.createRoom(room);
@@ -84,5 +83,22 @@ public class AdminController {
     @GetMapping("/successful-create-room")
     public String SuccessfulRegistrationPage() {
         return "admin-page/successful-create-room";
+    }
+
+    @GetMapping("/update-room")
+    public String updateBookingPage(Model model) {
+        model.addAttribute(ROOM_ATTRIBUTE, new Room());
+        return "admin-page/update-room";
+    }
+
+    @PostMapping("/update-room")
+    public String performUpdatingRoom(@ModelAttribute("room") Room room) {
+        roomService.updateRoom(room, room.getRoomNumber());
+        return "redirect:/admin/successful-update-room";
+    }
+
+    @GetMapping("/successful-update-room")
+    public String SuccessfulUpdatePage() {
+        return "admin-page/successful-update-room";
     }
 }

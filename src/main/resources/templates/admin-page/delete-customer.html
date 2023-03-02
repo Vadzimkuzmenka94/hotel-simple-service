@@ -60,20 +60,23 @@
 <body>
 <div class="container">
     <h1 style="color: floralwhite">Панель администратора</h1>
-    <h2 style="color: floralwhite">Введите логин заказчика, чтобы найти его в системе:</h2>
+    <h2 style="color: floralwhite">Введите логин заказчика, чтобы удалить:</h2>
     <form id="customer-form" method="get" action="http://localhost:8080/api/customers/{login}">
         <label for="login" style="color: #cccccc">Login заказчика:</label>
         <input type="text" id="login" name="login" value="login">
         <br>
-        <button type="submit">Найти заказчика</button>
+        <button type="submit">удалить заказчика</button>
     </form>
 </div>
 <script>
     document.getElementById("customer-form").addEventListener("submit", function(event) {
         event.preventDefault();
         const login = document.getElementById("login").value;
-        const url = `http://localhost:8080/api/customers/${login}`;
-        window.location.href = url;
+        fetch(`http://localhost:8080/api/customers/${login}`, {
+            method: 'DELETE'
+        })
+        window.location.href = 'http://localhost:8080/api/admin/successful-delete-customer';
+
     });
 </script>
 </body>

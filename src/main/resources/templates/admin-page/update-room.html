@@ -68,11 +68,14 @@
     </style>
 </head>
 <body>
-<form id="create-room-form" method="POST" action="/api/admin/create-room">
-    <legend>Введите данные о номере</legend>
+<form id="update-room-form" method="POST" action="/api/admin/update-room">
+    <legend>Введите данные о номере который вы хотите обновить</legend>
+
+
     <label for="roomNumber">введите номер комнаты:</label>
     <input type="number" name="roomNumber" id="roomNumber" placeholder="Room number" required>
     <div class="error-message" id="roomNumber-error"></div>
+
 
     <input type="hidden" name="wifi" id="wifi-hidden" value="false">
     <label for="wifi-check">Wi-Fi:</label>
@@ -102,6 +105,7 @@
     <label for="free-check">Free:</label>
     <input type="checkbox" name="free" id="free-check" value="true" onclick="document.getElementById('free-hidden').value = this.checked ? 'true' : 'false'"><br>
 
+
     <label for="cost">Введите сведения о стоимости:</label>
     <input type="number"  name="cost" id="cost" placeholder="Cost" required>
     <div class="error-message" id="cost-error"></div>
@@ -116,7 +120,7 @@
 
     <center>
         <div class="form-actions">
-            <input type="submit" value="Создать"/>
+            <input type="submit" value="обновить"/>
         </div>
     </center>
 </form>
