@@ -12,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 
 public class CustomerDto extends RepresentationModel<CustomerDto> {
     private Long id;
@@ -34,20 +35,5 @@ public class CustomerDto extends RepresentationModel<CustomerDto> {
         this.surname = surname;
         this.email = email;
         this.cardNumber = cardNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "CustomerDto{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
-                ", cardNumber='" + cardNumber + '\'' +
-                ", bookings=" + bookings +
-                '}';
     }
 }

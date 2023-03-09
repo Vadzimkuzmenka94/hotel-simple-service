@@ -35,6 +35,7 @@ public class BookingReportService implements ReportService {
         this.bookingRepository = bookingRepository;
     }
 
+    @Override
     public void generateExcel(HttpServletResponse response) throws IOException { // вынести в абстрактный класс
         try (ServletOutputStream outputStream = response.getOutputStream();
 

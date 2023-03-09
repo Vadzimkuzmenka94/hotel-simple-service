@@ -2,6 +2,8 @@
 package com.example.hotelsimpleservice.service.implementation;
 
 import com.example.hotelsimpleservice.dto.CustomerDto;
+import com.example.hotelsimpleservice.emailNotifications.MailSender;
+import com.example.hotelsimpleservice.emailNotifications.Messages;
 import com.example.hotelsimpleservice.exceptions.AppException;
 import com.example.hotelsimpleservice.exceptions.ErrorCode;
 import com.example.hotelsimpleservice.mapper.implementation.CustomerMapper;
@@ -9,6 +11,7 @@ import com.example.hotelsimpleservice.model.Customer;
 import com.example.hotelsimpleservice.repository.CustomerRepository;
 import com.example.hotelsimpleservice.service.CustomerService;
 import com.example.hotelsimpleservice.validator.CustomerValidator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -21,6 +24,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service("customerServiceImplementation")
 public class CustomerServiceImplementation implements CustomerService {
     private final CustomerRepository customerRepository;
@@ -28,6 +32,7 @@ public class CustomerServiceImplementation implements CustomerService {
     private final CustomerMapper mapper;
     private final EntityManager entityManager;
     private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
     public CustomerServiceImplementation(CustomerRepository customerRepository, CustomerValidator customerValidator,
@@ -37,6 +42,7 @@ public class CustomerServiceImplementation implements CustomerService {
         this.mapper = mapper;
         this.entityManager = entityManager;
         this.passwordEncoder = passwordEncoder;
+
     }
 
     @Transactional
@@ -53,6 +59,7 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public Optional<Customer> findByLogin(String login) {
         if (!isAdmin()) {
+            log.info("user role is ROLE_USER");
             login = getNameFromAuthentication();
         }
         return Optional.of(customerRepository.findByLogin(login).
@@ -68,9 +75,11 @@ public class CustomerServiceImplementation implements CustomerService {
     @Override
     public void delete(String login) {
         if (!isAdmin()) {
-          login = getNameFromAuthentication();
+            log.info("user role is ROLE_USER");
+            login = getNameFromAuthentication();
         }
         if (customerRepository.findByLogin(login).isEmpty()) {
+            log.error("user with login= " + login + " not found");
             throw new AppException(ErrorCode.USER_NOT_FOUND);
         }
         entityManager.remove(customerRepository.findByLogin(login).get());

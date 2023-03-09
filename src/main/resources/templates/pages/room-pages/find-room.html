@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Room Search</title>
+    <style>
+        body {
+            background-image: url("https://pbs.twimg.com/media/DFG2tgMXkAIm_GC.jpg:large");
+            background-size: cover;
+        }
+        h1 {
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            font-size: 36px;
+            margin-top: 50px;
+            text-shadow: green;
+        }
+        form {
+            margin-top: 50px;
+            width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px #ccc;
+            background: rgba(0,0,0,0.5);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        input[type="checkbox"] {
+            margin-bottom: 20px;
+            margin-left: 10px;
+        }
+        input[type="submit"] {
+            background-color: green;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 2px 2px 2px #000;
+        }
+        input:active {
+            background-color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <form action="http://localhost:8080/api/rooms/find" method="GET">
+        <h1>Room Search</h1>
+        <label for="wifi">Wi-Fi:</label>
+        <input type="checkbox" name="wifi" id="wifi"><br>
+        <label for="freeParking">Free Parking:</label>
+        <input type="checkbox" name="freeParking" id="freeParking"><br>
+        <label for="conditioner">Conditioner:</label>
+        <input type="checkbox" name="conditioner" id="conditioner"><br>
+        <label for="fridge">Fridge:</label>
+        <input type="checkbox" name="fridge" id="fridge"><br>
+        <label for="noSmokingRoom">No Smoking Room:</label>
+        <input type="checkbox" name="noSmokingRoom" id="noSmokingRoom"><br>
+        <label for="breakfast">Breakfast:</label>
+        <input type="checkbox" name="breakfast" id="breakfast"><br>
+        <label for="free">Free:</label>
+        <input type="checkbox" name="free" id="free"><br>
+        <input type="submit" value="Search">
+
+    </form>
+</div>
+</body>
+</html>

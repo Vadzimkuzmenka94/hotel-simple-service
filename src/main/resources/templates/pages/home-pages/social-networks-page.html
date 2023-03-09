@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Hotel Booking Service</title>
+    <link rel="icon" href="https://lh3.googleusercontent.com/GrujG3N5XqkgwiV6unrBcBuo_NXgr3krcgSKNp5eKm52SbwAlN71brITPrE0mSr3w2k">
+    <style>
+
+        body {
+            background-image: url("https://pbs.twimg.com/media/DFG2tgMXkAIm_GC.jpg:large");
+            background-size: cover;
+        }
+
+        form {
+            margin-top: 50px;
+            width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px #ccc;
+            background: rgba(0,0,0,0.5);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        label {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="message"]
+        {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        textarea {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        nav {
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            margin-left: 20px;
+            transition: color 0.3s ease-in-out;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: green;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #005EA8;
+        }
+        input[type="submit"],
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: black;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #005EA8;
+        }
+
+        nav a:hover {
+            color: #ff6347;
+        }
+
+        nav .logo h1 {
+            font-size: 28px;
+        }
+
+
+        .gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .gallery img {
+            width: calc(25% - 10px);
+            margin-bottom: 20px;
+            transition: transform 0.2s ease-in-out;
+        }
+        .gallery a {
+            margin-bottom: 20px;
+        }
+
+
+        .gallery img:hover {
+            transform: scale(1.2);
+        }
+
+        nav .active a {
+            color: #ff6347;
+        }
+
+        .contact-section h2 {
+            line-height: 1.5;
+            font-weight: bold;
+            color: white;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .contact-section p {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .contact-section ul {
+            color: white;
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .contact-section ul li {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .contact-section form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+    </style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav>
+    <div class="logo">
+        <h1>Наши социальные сети</h1>
+    </div>
+    <a href="http://localhost:8080/api/home">
+        <button type="submit"> Вернуться на главную страницу </button>
+    </a>
+</nav>
+
+<div class="gallery">
+   <a href="https://www.instagram.com/connect.batumi/">
+    <img src="https://i.siteapi.org/4QMmls7m6FK1anJIhQgvlE-3PK4=/0x0:900x900/75abc1024519436.s2.siteapi.org/img/idbjn0qdgxs0888w8sco0go0cgws4o" alt="Image 1">
+    </a>
+    <a href="https://www.facebook.com/groups/1891096274493093/">
+    <img src="https://clipartcraft.com/images/facebook-logo-png-transparent-background-social-media.png" alt="Image 2">
+    </a>
+    <a href="https://vk.com/batumi_online">
+    <img src="https://www.freeiconspng.com/uploads/glossy-vk-logo-png--3.png" alt="Image 3">
+    </a>
+    <a href="https://vk.com/batumi_online">
+        <img src="https://pbs.twimg.com/media/B2aOKIbIAAAATdN.png" alt="Image 4">
+    </a>
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+<footer>
+    <p>&copy; 2023 Hotel Booking. All Rights Reserved.</p>
+</footer>
+</body>
+</html>

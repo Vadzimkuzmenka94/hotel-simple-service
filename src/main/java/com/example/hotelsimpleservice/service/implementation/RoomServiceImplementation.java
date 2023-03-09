@@ -5,6 +5,7 @@ import com.example.hotelsimpleservice.exceptions.ErrorCode;
 import com.example.hotelsimpleservice.model.Room;
 import com.example.hotelsimpleservice.repository.RoomRepository;
 import com.example.hotelsimpleservice.service.RoomService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
-
+@Slf4j
 @Service
 public class RoomServiceImplementation implements RoomService {
     private static final boolean TAKE_ROOM = false;
@@ -54,6 +55,12 @@ public class RoomServiceImplementation implements RoomService {
         roomRepository.takeRoom(number, TAKE_ROOM);
     }
 
+    /**
+     * Method for update rooms. If we don't pass parametern and this parameter = null, method just take old parameter.
+     * @param room
+     * @param id
+     * @return
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Transactional
     @Override
@@ -85,6 +92,7 @@ public class RoomServiceImplementation implements RoomService {
 
     public void checkingExistenceRoom(Room room) {
         if (room == null) {
+            log.error("room not found");
             throw new AppException(ErrorCode.ROOM_NOT_FOUND);
         }
     }

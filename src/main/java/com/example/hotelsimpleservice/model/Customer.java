@@ -1,13 +1,11 @@
 package com.example.hotelsimpleservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 @Getter
 @Setter

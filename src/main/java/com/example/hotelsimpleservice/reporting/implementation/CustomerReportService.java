@@ -62,7 +62,6 @@ public class CustomerReportService implements ReportService {
                     dataRow.createCell(7).setCellValue(customer.getCardNumber());
                     dataRowIndex++;
                 }
-
                 workbook.write(outputStream);
             }
         }

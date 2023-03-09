@@ -15,7 +15,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/rooms")
+@RequestMapping("/v-rest/rooms")
 public class RoomRestController {
     private final String GET_ROOM = "Link for get room";
     private final String UPDATE_ROOM = "Link for update room";
@@ -32,7 +32,7 @@ public class RoomRestController {
         return ResponseEntity.of(Optional.of(roomService.findByRoomNumber(id)));
     }
 
-    @GetMapping("/find")
+    @GetMapping("/search")
     public ResponseEntity<List<Room>> findRoomByParameter(@RequestParam(required = false) Boolean wifi,
                                                           @RequestParam(required = false) Boolean free_parking,
                                                           @RequestParam(required = false) Boolean conditioner,

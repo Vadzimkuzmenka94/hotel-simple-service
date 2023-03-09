@@ -17,7 +17,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/v-rest/customers")
 public class CustomerRestController {
     private final String DELETED_ACCOUNT_MESSAGE ="You have deleted your account from our service, come back soon";
     private final String GET_CUSTOMER = "Link for get customer by login";

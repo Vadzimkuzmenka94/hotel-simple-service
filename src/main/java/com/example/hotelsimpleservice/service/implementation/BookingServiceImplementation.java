@@ -1,13 +1,17 @@
 package com.example.hotelsimpleservice.service.implementation;
 
+import com.example.hotelsimpleservice.emailNotifications.MailSender;
+import com.example.hotelsimpleservice.emailNotifications.Messages;
 import com.example.hotelsimpleservice.exceptions.AppException;
 import com.example.hotelsimpleservice.exceptions.ErrorCode;
 import com.example.hotelsimpleservice.model.Booking;
+import com.example.hotelsimpleservice.model.Customer;
 import com.example.hotelsimpleservice.repository.BookingRepository;
 import com.example.hotelsimpleservice.service.BookingService;
 import com.example.hotelsimpleservice.service.CustomerService;
 import com.example.hotelsimpleservice.service.RoomService;
 import com.example.hotelsimpleservice.validator.BookingValidator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -19,7 +23,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-
+@Slf4j
 @Service
 public class BookingServiceImplementation implements BookingService {
     private final String BYN_CURRENCY = "BYN";
@@ -31,15 +35,17 @@ public class BookingServiceImplementation implements BookingService {
     private final BookingValidator bookingValidator;
     private final EntityManager entityManager;
     private final CustomerService customerService;
+    private final MailSender mailSender;
 
     @Autowired
     public BookingServiceImplementation(BookingRepository bookingRepository, RoomService roomService,
-                                        BookingValidator bookingValidator, EntityManager entityManager, CustomerService customerService) {
+                                        BookingValidator bookingValidator, EntityManager entityManager, CustomerService customerService, MailSender mailSender) {
         this.bookingRepository = bookingRepository;
         this.roomService = roomService;
         this.bookingValidator = bookingValidator;
         this.entityManager = entityManager;
         this.customerService = customerService;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -50,6 +56,7 @@ public class BookingServiceImplementation implements BookingService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         booking.setCustomer(customerService.findByLogin(authentication.getName()).get());
         booking.setName(authentication.getName());
+        mailSender.sendEmail(customerService.findByLogin(authentication.getName()).get().getEmail(), "message", Messages.CREATE_BOOKING_MESSAGE.getMessage());
         return bookingRepository.save(booking);
     }
 
@@ -63,6 +70,7 @@ public class BookingServiceImplementation implements BookingService {
     @Override
     public Optional<Booking> findById(Long id) {
         if (!isAdmin()) {
+            log.info("user role is ROLE_USER");
             return Optional.ofNullable(findByName(getNameFromAuthentication()).get(0));
         }
         return Optional.of(bookingRepository.findById(id).
@@ -78,7 +86,8 @@ public class BookingServiceImplementation implements BookingService {
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @Override
     public List<Booking> findByName(String name) {
-        if (isAdmin()) {
+        if (!isAdmin()) {
+            log.info("user role is ROLE_USER");
             name = getNameFromAuthentication();
         }
         return bookingRepository.findByName(name);
@@ -105,6 +114,7 @@ public class BookingServiceImplementation implements BookingService {
     @Override
     public void deleteBooking(Long id) {
         if (bookingRepository.findById(id).isEmpty()) {
+            log.error("booking with id = " + id + " not found");
             throw new AppException(ErrorCode.BOOKING_NOT_FOUND);
         }
         entityManager.remove(bookingRepository.findById(id).get());
@@ -146,6 +156,7 @@ public class BookingServiceImplementation implements BookingService {
 
     public void checkingExistenceRoom(Booking booking) {
         if (booking == null) {
+            log.error("booking not found");
             throw new AppException(ErrorCode.BOOKING_NOT_FOUND);
         }
     }

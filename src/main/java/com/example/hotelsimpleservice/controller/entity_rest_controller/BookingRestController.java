@@ -15,18 +15,16 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/booking")
+@RequestMapping("/v-rest/bookings")
 public class BookingRestController {
     private final String GET_BOOKING = "Link for get booking";
     private final String UPDATE_BOOKING = "Link for update booking";
     private final String DELETE_BOOKING = "Link for delete booking";
     private final BookingService bookingService;
-    private final RoomService roomService;
 
     @Autowired
     public BookingRestController(BookingService bookingService, RoomService roomService) {
         this.bookingService = bookingService;
-        this.roomService = roomService;
     }
 
     @GetMapping("/{id}")
@@ -53,7 +51,7 @@ public class BookingRestController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
-    @GetMapping("/find")
+    @GetMapping("/search")
     public ResponseEntity<List<Booking>> findBookingByParameter(@RequestParam(required = false) String name,
                                                                 @RequestParam(required = false) Integer duration,
                                                                 @RequestParam(required = false) Double cost,

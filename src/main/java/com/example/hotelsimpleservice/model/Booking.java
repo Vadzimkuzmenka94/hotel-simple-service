@@ -12,7 +12,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-
 @Entity
 @Table(name = "booking", schema = "public")
 @Getter

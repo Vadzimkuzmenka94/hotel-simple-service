@@ -26,6 +26,11 @@ public class ReportController {
         this.roomReportService = roomReportService;
     }
 
+    @GetMapping("/show-reporting-options")
+    public String reportingPage() {
+        return "admin-page/reporting/show-reporting-options";
+    }
+
     @GetMapping("/booking_exel")
     public void generateBookingExelReport(HttpServletResponse response) throws IOException {
         response.setContentType("application/octet-stream");

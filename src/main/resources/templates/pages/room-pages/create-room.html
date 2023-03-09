@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Страница регистрации</title>
+    <link rel="icon" href="https://lh3.googleusercontent.com/GrujG3N5XqkgwiV6unrBcBuo_NXgr3krcgSKNp5eKm52SbwAlN71brITPrE0mSr3w2k">
+    <style>
+
+        body {
+            background-image: url("https://pbs.twimg.com/media/DFG2tgMXkAIm_GC.jpg:large");
+            background-size: cover;
+        }
+        .slider img {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        form {
+            margin-top: 50px;
+            width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px #ccc;
+            background: rgba(0,0,0,0.5);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        label {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="message"]
+        {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        textarea {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        nav {
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            margin-left: 20px;
+            transition: color 0.3s ease-in-out;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #005EA8;
+        }
+        input[type="submit"],
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: black;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #005EA8;
+        }
+
+        nav a:hover {
+            color: #ff6347;
+        }
+
+        nav .logo h1 {
+            font-size: 28px;
+        }
+
+        nav .active a {
+            color: #ff6347;
+        }
+
+        .nav-links li {
+            margin: 0 1em;
+        }
+
+        .nav-links li.active a {
+            color: red;
+            text-decoration: underline;
+        }
+        .main-section {
+            margin-top: 50px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px #ccc;
+            background: rgba(255,255,255,0.8);
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .main-section h2 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .main-section p {
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .contact-section h2 {
+            line-height: 1.5;
+            font-weight: bold;
+            color: white;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+
+
+        .contact-section p {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .contact-section ul {
+            color: white;
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .contact-section ul li {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .contact-section form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+    </style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav>
+    <div class="logo">
+        <h1>Batumi booking service</h1>
+        <img src="https://lh3.googleusercontent.com/GrujG3N5XqkgwiV6unrBcBuo_NXgr3krcgSKNp5eKm52SbwAlN71brITPrE0mSr3w2k"
+             alt="logo" width="50" height="50">
+    </div>
+</nav>
+
+<form id="create-room-form" method="POST" action="/api/admin/create-room">
+    <label for="roomNumber">введите номер комнаты:</label>
+    <input type="number" name="roomNumber" id="roomNumber" placeholder="Room number" required>
+    <div class="error-message" id="roomNumber-error"></div>
+
+    <input type="hidden" name="wifi" id="wifi-hidden" value="false">
+    <label for="wifi-check">Wi-Fi:</label>
+    <input type="checkbox" name="wifi" id="wifi-check" value="true" onclick="document.getElementById('wifi-hidden').value = this.checked ? 'true' : 'false'">  <br>
+
+    <input type="hidden" name="freeParking" id="freeParking-hidden" value="false">
+    <label for="freeParking-check">Free Parking:</label>
+    <input type="checkbox" name="freeParking" id="freeParking-check" value="true" onclick="document.getElementById('freeParking-hidden').value = this.checked ? 'true' : 'false'"><br>
+
+    <input type="hidden" name="conditioner" id="conditioner-hidden" value="false">
+    <label for="conditioner-check">Conditioner:</label>
+    <input type="checkbox" name="conditioner" id="conditioner-check" value="true" onclick="document.getElementById('conditioner-hidden').value = this.checked ? 'true' : 'false'"><br>
+
+    <input type="hidden" name="fridge" id="fridge-hidden" value="false">
+    <label for="fridge-check">Fridge:</label>
+    <input type="checkbox" name="fridge" id="fridge-check" value="true" onclick="document.getElementById('fridge-hidden').value = this.checked ? 'true' : 'false'"><br>
+
+    <input type="hidden" name="noSmokingRoom" id="noSmokingRoom-hidden" value="false">
+    <label for="noSmokingRoom-check">No Smoking Room:</label>
+    <input type="checkbox" name="noSmokingRoom" id="noSmokingRoom-check" value="true" onclick="document.getElementById('noSmokingRoom-hidden').value = this.checked ? 'true' : 'false'"><br>
+
+    <input type="hidden" name="breakfast" id="breakfast-hidden" value="false">
+    <label for="breakfast-check">Breakfast:</label>
+    <input type="checkbox" name="breakfast" id="breakfast-check" value="true" onclick="document.getElementById('breakfast-hidden').value = this.checked ? 'true' : 'false'"><br>
+
+    <input type="hidden" name="free-hidden" value="false">
+    <label for="free-check">Free:</label>
+    <input type="checkbox" name="free" id="free-check" value="true" onclick="document.getElementById('free-hidden').value = this.checked ? 'true' : 'false'"><br>
+
+    <label for="cost">Введите сведения о стоимости:</label>
+    <input type="number"  name="cost" id="cost" placeholder="Cost" required>
+    <div class="error-message" id="cost-error"></div>
+
+    <label for="numberOfBeds">введите количество комнат:</label>
+    <input type="number" name="numberOfBeds" id="numberOfBeds" placeholder="Number of beds" required>
+    <div class="error-message" id="numberOfBeds-error"></div>
+
+    <label for="comment">Введите комментарий:</label>
+    <input type="text"  name="comment" id="comment" placeholder="Сomment" required>
+    <div class="error-message" id="comment-error"></div>
+
+    <center>
+        <div class="form-actions">
+            <input type="submit" value="Создать"/>
+        </div>
+    </center>
+</form>

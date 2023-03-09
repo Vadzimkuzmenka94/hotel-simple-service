@@ -20,7 +20,6 @@ public class CustomerMapper implements Mapper<Customer, CustomerDto> {
                 .cardNumber(entity.getCardNumber())
                 .bookings(entity.getBookings())
                 .build();
-
         return customerDto;
     }
 
@@ -35,9 +34,8 @@ public class CustomerMapper implements Mapper<Customer, CustomerDto> {
                 .surname(dto.getSurname())
                 .email(dto.getEmail())
                 .cardNumber(dto.getCardNumber())
+                .bookings(dto.getBookings())
                 .build();
-        if (!(dto.getBookings() == null))
-            customer.setBookings(dto.getBookings());
         return customer;
     }
 }

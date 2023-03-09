@@ -19,15 +19,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final String LOGIN_PAGE = "/auth/login";
+    private final String GENERAL_PAGE = "/home/**";
     private final String REGISTRATION_PAGE = "/auth/registration";
     private final String SUCCESSFUL_REGISTRATION_PAGE = "/auth/successful-registration";
     private final String ERROR_PAGE = "/auth/successful-registration";
-    private final String HOME_PAGE = "/admin/show-all-actions";
+    private final String HOME_PAGE = "/actions";
     private final String PROCESS_LOGIN = "/process_login";
     private final String LOGIN_ERROR = "/auth/login?error";
     private final String LOGOUT = "/logout";
     private final SecurityServiceImplementation securityServiceImplementation;
-    static final String ADMIN = "ROLE_ADMIN";
 
     @Autowired
     public SecurityConfig(SecurityServiceImplementation securityServiceImplementation) {
@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             httpSecurity.
                     csrf().disable()
                     .authorizeRequests()
-                    .antMatchers(LOGIN_PAGE, ERROR_PAGE, REGISTRATION_PAGE, SUCCESSFUL_REGISTRATION_PAGE)
+                    .antMatchers(LOGIN_PAGE, ERROR_PAGE, REGISTRATION_PAGE, SUCCESSFUL_REGISTRATION_PAGE, GENERAL_PAGE)
                     .permitAll()
                     .anyRequest().authenticated()
                     .and()
