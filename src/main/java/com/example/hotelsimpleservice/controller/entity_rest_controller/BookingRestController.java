@@ -29,13 +29,13 @@ public class BookingRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Booking> findById(@PathVariable Long id) {
-        generateResponseWithLinks(bookingService.findById(id).get());
-        return ResponseEntity.of(bookingService.findById(id));
+        generateResponseWithLinks(bookingService.findBookingById(id).get());
+        return ResponseEntity.of(bookingService.findBookingById(id));
     }
 
     @GetMapping
     public ResponseEntity<List<Booking>> findAll() {
-        List<Booking> bookings = bookingService.findAll();
+        List<Booking> bookings = bookingService.findAllBookings();
         addLinkToEntity(bookings);
         return ResponseEntity.ok().body(bookings);
     }

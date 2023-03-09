@@ -37,7 +37,7 @@ public class CustomerWebController {
     public String performDeletingCustomer(@ModelAttribute(CUSTOMER_ATTRIBUTE) Customer customer) {
         mailSender.sendEmail(customer.getEmail(), "message", Messages.DELETE_BOOKING_MESSAGE.getMessage());
         log.info(Messages.DELETE_BOOKING_MESSAGE.getMessage());
-        customerService.delete(customer.getLogin());
+        customerService.deleteCustomer(customer.getLogin());
         return "redirect:/pages/customer-pages/successful-pages/successful-delete-customer";
     }
 

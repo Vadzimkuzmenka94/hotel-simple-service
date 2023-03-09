@@ -11,7 +11,7 @@ public interface RoomService {
 
     Room updateRoom(Room room, int id);
 
-    Room findByRoomNumber(int number);
+    Room findRoomByNumber(int number);
 
     List<Room> findRoomByDifferentParameters(Boolean wifi, Boolean free_parking, Boolean conditioner, Boolean fridge,
                                              Boolean no_smoking_room, Boolean breakfast, Boolean free);

@@ -33,27 +33,27 @@ public class CustomerRestController {
 
     @GetMapping
     public ResponseEntity<List<Customer>> getAll() {
-        List<Customer> customers = customerService.findAll();
+        List<Customer> customers = customerService.findAllCustomers();
         addLinkToEntity(customers);
         return ResponseEntity.ok().body(customers);
     }
 
     @PostMapping
     public ResponseEntity<CustomerDto> create(@RequestBody CustomerDto user) {
-        customerService.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.save(user));
+        customerService.createCustomer(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.createCustomer(user));
     }
 
     @GetMapping("/{login}")
     ResponseEntity<Optional<Customer>> findByLogin(@PathVariable String login) {
-        generateResponseWithLinks(customerService.findByLogin(login).get());
-        return ResponseEntity.of(Optional.of(customerService.findByLogin(login)));
+        generateResponseWithLinks(customerService.findCustomerByLogin(login).get());
+        return ResponseEntity.of(Optional.of(customerService.findCustomerByLogin(login)));
     }
 
     @DeleteMapping("/{login}")
     public ResponseEntity<Customer> deleteCustomer (@PathVariable String login) {
-        customerService.delete(login);
-        javaMailSender.sendEmail(customerService.findByLogin(login).get().getEmail(), "message", DELETED_ACCOUNT_MESSAGE);
+        customerService.deleteCustomer(login);
+        javaMailSender.sendEmail(customerService.findCustomerByLogin(login).get().getEmail(), "message", DELETED_ACCOUNT_MESSAGE);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 

@@ -25,7 +25,7 @@ public class SecurityServiceImplementation implements SecurityService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Optional<Customer> user = Optional.ofNullable(customerRepository.findByLogin(login)
+        Optional<Customer> user = Optional.ofNullable(customerRepository.findCustomerByLogin(login)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND)));
         return new CustomerDetails(user.get());
     }

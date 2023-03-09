@@ -67,10 +67,10 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
 
 
     @Query(value = FIND_BY_ROOM_NUMBER_QUERY, nativeQuery = true)
-    Room findByRoomNumber(int number);
+    Room findRoomByNumber(int number);
 
     @Query(value = FIND_FREE_ROOM, nativeQuery = true)
-    List<Room> findFreeNumber(boolean free);
+    List<Room> findFreeRoom(boolean free);
 
     @Query(value = FIND_ROOM_BY_PARAMETERS, nativeQuery = true)
     List<Room> findRoomByDifferentParameters(Boolean wifi, Boolean free_parking, Boolean conditioner, Boolean fridge,

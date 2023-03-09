@@ -29,11 +29,11 @@ public class BookingValidator {
             log.error("problem with validation currency");
             throw new AppException(ErrorCode.BOOKING_CURRENCY_INVALID);
         }
-        if (roomService.findByRoomNumber(booking.getRoomNumber()) == null) {
+        if (roomService.findRoomByNumber(booking.getRoomNumber()) == null) {
             log.error("problem with validation room number");
             throw new AppException(ErrorCode.ROOM_NOT_FOUND);
         }
-        if (!roomService.findByRoomNumber(booking.getRoomNumber()).getFree()) {
+        if (!roomService.findRoomByNumber(booking.getRoomNumber()).getFree()) {
             log.error("problem with validation room number because room not available");
             throw new AppException(ErrorCode.ROOM_NOT_AVAILABLE);
         }

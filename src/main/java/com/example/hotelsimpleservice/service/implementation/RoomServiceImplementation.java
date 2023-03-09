@@ -35,9 +35,9 @@ public class RoomServiceImplementation implements RoomService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
-    public Room findByRoomNumber(int number) {
-        checkingExistenceRoom(roomRepository.findByRoomNumber(number));
-        return roomRepository.findByRoomNumber(number);
+    public Room findRoomByNumber(int number) {
+        checkRoomExistence(roomRepository.findRoomByNumber(number));
+        return roomRepository.findRoomByNumber(number);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class RoomServiceImplementation implements RoomService {
     @Transactional
     @Override
     public void takeRoom(int number) {
-        checkingExistenceRoom(roomRepository.findByRoomNumber(number));
+        checkRoomExistence(roomRepository.findRoomByNumber(number));
         roomRepository.takeRoom(number, TAKE_ROOM);
     }
 
@@ -65,8 +65,8 @@ public class RoomServiceImplementation implements RoomService {
     @Transactional
     @Override
     public Room updateRoom(Room room, int id) {
-        checkingExistenceRoom(roomRepository.findByRoomNumber(id));
-        Room roomInDb = roomRepository.findByRoomNumber(id);
+        checkRoomExistence(roomRepository.findRoomByNumber(id));
+        Room roomInDb = roomRepository.findRoomByNumber(id);
         detachEntity(roomInDb);
         roomInDb.setId(room.getId() != null ? room.getId() : roomInDb.getId());
         roomInDb.setWifi(room.getWifi() != null ? room.getWifi() : roomInDb.getWifi());
@@ -86,11 +86,11 @@ public class RoomServiceImplementation implements RoomService {
 
     @Override
     public void detachEntity(Room room) {
-        checkingExistenceRoom(room);
+        checkRoomExistence(room);
         entityManager.detach(room);
     }
 
-    public void checkingExistenceRoom(Room room) {
+    private void checkRoomExistence(Room room) {
         if (room == null) {
             log.error("room not found");
             throw new AppException(ErrorCode.ROOM_NOT_FOUND);

@@ -21,5 +21,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             "FROM customer WHERE customer.login = :login";
 
     @Query(value = FIND_BY_LOGIN, nativeQuery = true)
-    Optional<Customer> findByLogin(String login);
+    Optional<Customer> findCustomerByLogin(String login);
 }

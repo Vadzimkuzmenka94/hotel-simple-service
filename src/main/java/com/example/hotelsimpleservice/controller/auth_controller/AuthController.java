@@ -35,7 +35,7 @@ public class AuthController {
 
     @PostMapping("/registration")
     public String performRegistration(@ModelAttribute("user") CustomerDto customer) {
-        customerService.save(customer);
+        customerService.createCustomer(customer);
         mailSender.sendEmail(customer.getEmail(), "message", Messages.CREATE_BOOKING_MESSAGE.getMessage());
         log.info(Messages.CREATE_BOOKING_MESSAGE.getMessage());
         return "redirect:/auth/successful-registration";

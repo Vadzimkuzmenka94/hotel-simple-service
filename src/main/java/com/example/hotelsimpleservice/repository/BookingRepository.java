@@ -44,5 +44,5 @@ public interface BookingRepository extends CrudRepository <Booking, Long> {
                                                    Integer room_number);
 
     @Query(value = FIND_BOOKING_BY_NAME, nativeQuery = true)
-    List<Booking> findByName(String name);
+    List<Booking> findBookingByName(String name);
 }

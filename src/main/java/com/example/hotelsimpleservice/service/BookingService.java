@@ -1,7 +1,6 @@
 package com.example.hotelsimpleservice.service;
 
 import com.example.hotelsimpleservice.model.Booking;
-import com.example.hotelsimpleservice.model.Room;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,11 +10,11 @@ import java.util.Optional;
 public interface BookingService {
     Booking createBooking(Booking booking);
 
-    Optional<Booking> findById(Long id);
+    Optional<Booking> findBookingById(Long id);
 
-    List<Booking> findAll();
+    List<Booking> findAllBookings();
 
-    List<Booking> findByName(String name);
+    List<Booking> findBookingByName(String name);
 
     Booking updateBooking(Booking booking, Long id);
 

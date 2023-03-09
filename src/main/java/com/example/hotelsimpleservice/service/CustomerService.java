@@ -10,11 +10,11 @@ import java.util.Optional;
 
 @Service
 public interface CustomerService {
-    CustomerDto save(CustomerDto customerDto);
+    CustomerDto createCustomer(CustomerDto customerDto);
 
-    Optional<Customer> findByLogin(String login);
+    Optional<Customer> findCustomerByLogin(String login);
 
-    void delete (String login);
+    void deleteCustomer(String login);
 
-    List<Customer> findAll();
+    List<Customer> findAllCustomers();
 }

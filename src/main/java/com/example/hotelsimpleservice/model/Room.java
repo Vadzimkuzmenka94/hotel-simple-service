@@ -24,7 +24,6 @@ public class Room extends RepresentationModel<Room> {
     private Boolean conditioner;
     private Boolean fridge;
     @Column(name = "no_smoking_room")
-    @Getter
     private Boolean noSmokingRoom;
     private Boolean breakfast;
     private Double cost;

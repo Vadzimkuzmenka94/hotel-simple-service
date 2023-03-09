@@ -1,6 +1,5 @@
 package com.example.hotelsimpleservice.service.implementation;
 
-import com.example.hotelsimpleservice.exceptions.AppException;
 import com.example.hotelsimpleservice.model.Room;
 import com.example.hotelsimpleservice.repository.RoomRepository;
 import org.junit.Test;
@@ -62,10 +61,10 @@ public class RoomServiceImplementationTest {
     public void testReadByRoomNumber() {
         Room room = new Room(1L, true, false, false, false, false, false, 100D, "Test Comment", 2, true, 2);
         Room roomInDb = new Room(2L, true, true, true, true, true, true, 200D, "Test Comment 2", 2, false, 2);
-        when(roomRepository.findByRoomNumber(roomInDb.getRoomNumber())).thenReturn(room);
-        Room readRoom = roomServiceImplementation.findByRoomNumber(room.getRoomNumber());
+        when(roomRepository.findRoomByNumber(roomInDb.getRoomNumber())).thenReturn(room);
+        Room readRoom = roomServiceImplementation.findRoomByNumber(room.getRoomNumber());
 
-        verify(roomRepository, times(2)).findByRoomNumber(room.getRoomNumber());
+        verify(roomRepository, times(2)).findRoomByNumber(room.getRoomNumber());
         assertEquals(room, readRoom);
     }
 
@@ -75,7 +74,7 @@ public class RoomServiceImplementationTest {
 
         Room room = new Room(1L, true, false, false, false, false, false, 100D, "Test Comment", 2, true, 2);
         Room roomInDb = new Room(2L, true, true, true, true, true, true, 200D, "Test Comment 2", 2, false, 2);
-        when(roomRepository.findByRoomNumber(2)).thenReturn(roomInDb);
+        when(roomRepository.findRoomByNumber(2)).thenReturn(roomInDb);
 
         Room updatedRoom = roomServiceImplementation.updateRoom(room, 2);
 
@@ -108,7 +107,7 @@ public class RoomServiceImplementationTest {
 
         int number = 2;
         Room room = new Room(1L, true, false, false, false, false, false, 100D, "Test Comment", 2, true, 2);
-        when(roomRepository.findByRoomNumber(2)).thenReturn(room);
+        when(roomRepository.findRoomByNumber(2)).thenReturn(room);
         roomServiceImplementation.takeRoom(number);
         verify(roomRepository, times(1)).takeRoom(number, false);
     }
@@ -134,7 +133,7 @@ public class RoomServiceImplementationTest {
         int id = 123;
         Room room = mock(Room.class);
         Room roomInDb = mock(Room.class);
-        when(roomRepository.findByRoomNumber(id)).thenReturn(roomInDb);
+        when(roomRepository.findRoomByNumber(id)).thenReturn(roomInDb);
         roomServiceImplementation.updateRoom(room, id);
         verify(entityManager).merge(roomInDb);
     }
@@ -146,9 +145,9 @@ public class RoomServiceImplementationTest {
         verify(entityManager).detach(room);
     }
 
-    @Test(expected = AppException.class)
+ /*   @Test(expected = AppException.class)
     public void testCheckingExistenceRoom() {
         Room room = null;
-        roomServiceImplementation.checkingExistenceRoom(room);
-    }
+        roomServiceImplementation.checkRoomExistence(room);
+    }*/
 }

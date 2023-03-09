@@ -5,7 +5,6 @@ import com.example.hotelsimpleservice.emailNotifications.Messages;
 import com.example.hotelsimpleservice.exceptions.AppException;
 import com.example.hotelsimpleservice.exceptions.ErrorCode;
 import com.example.hotelsimpleservice.model.Booking;
-import com.example.hotelsimpleservice.model.Customer;
 import com.example.hotelsimpleservice.repository.BookingRepository;
 import com.example.hotelsimpleservice.service.BookingService;
 import com.example.hotelsimpleservice.service.CustomerService;
@@ -54,9 +53,9 @@ public class BookingServiceImplementation implements BookingService {
         roomService.takeRoom(booking.getRoomNumber());
         calculateFinalPrice(booking);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        booking.setCustomer(customerService.findByLogin(authentication.getName()).get());
+        booking.setCustomer(customerService.findCustomerByLogin(authentication.getName()).get());
         booking.setName(authentication.getName());
-        mailSender.sendEmail(customerService.findByLogin(authentication.getName()).get().getEmail(), "message", Messages.CREATE_BOOKING_MESSAGE.getMessage());
+        mailSender.sendEmail(customerService.findCustomerByLogin(authentication.getName()).get().getEmail(), "message", Messages.CREATE_BOOKING_MESSAGE.getMessage());
         return bookingRepository.save(booking);
     }
 
@@ -68,10 +67,10 @@ public class BookingServiceImplementation implements BookingService {
      */
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole ('ROLE_USER')")
     @Override
-    public Optional<Booking> findById(Long id) {
+    public Optional<Booking> findBookingById(Long id) {
         if (!isAdmin()) {
             log.info("user role is ROLE_USER");
-            return Optional.ofNullable(findByName(getNameFromAuthentication()).get(0));
+            return Optional.ofNullable(findBookingByName(getNameFromAuthentication()).get(0));
         }
         return Optional.of(bookingRepository.findById(id).
                 orElseThrow(() -> new AppException(ErrorCode.BOOKING_NOT_FOUND)));
@@ -79,18 +78,18 @@ public class BookingServiceImplementation implements BookingService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
-    public List<Booking> findAll() {
+    public List<Booking> findAllBookings() {
         return (List<Booking>) bookingRepository.findAll();
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @Override
-    public List<Booking> findByName(String name) {
+    public List<Booking> findBookingByName(String name) {
         if (!isAdmin()) {
             log.info("user role is ROLE_USER");
             name = getNameFromAuthentication();
         }
-        return bookingRepository.findByName(name);
+        return bookingRepository.findBookingByName(name);
     }
 
     @Transactional
@@ -145,7 +144,7 @@ public class BookingServiceImplementation implements BookingService {
     @Override
     public void calculateFinalPrice(Booking booking) {
         Double finalPrice = recalculationToCorrectCurrency(booking.getCurrency(), calculateBookingCost(booking.getDuration(),
-                roomService.findByRoomNumber(booking.getRoomNumber()).getCost()));
+                roomService.findRoomByNumber(booking.getRoomNumber()).getCost()));
         booking.setCost(finalPrice);
     }
 

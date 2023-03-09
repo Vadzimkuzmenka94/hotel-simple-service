@@ -27,9 +27,9 @@ public class RoomRestController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Room> findById(@PathVariable int id) {
-        generateResponseWithLinks(roomService.findByRoomNumber(id));
-        return ResponseEntity.of(Optional.of(roomService.findByRoomNumber(id)));
+    public ResponseEntity<Room> findById(@PathVariable int id) {
+        generateResponseWithLinks(roomService.findRoomByNumber(id));
+        return ResponseEntity.of(Optional.of(roomService.findRoomByNumber(id)));
     }
 
     @GetMapping("/search")

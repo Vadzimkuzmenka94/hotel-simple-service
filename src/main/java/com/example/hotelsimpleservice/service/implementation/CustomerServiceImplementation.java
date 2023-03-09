@@ -2,8 +2,6 @@
 package com.example.hotelsimpleservice.service.implementation;
 
 import com.example.hotelsimpleservice.dto.CustomerDto;
-import com.example.hotelsimpleservice.emailNotifications.MailSender;
-import com.example.hotelsimpleservice.emailNotifications.Messages;
 import com.example.hotelsimpleservice.exceptions.AppException;
 import com.example.hotelsimpleservice.exceptions.ErrorCode;
 import com.example.hotelsimpleservice.mapper.implementation.CustomerMapper;
@@ -47,7 +45,7 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @Transactional
     @Override
-    public CustomerDto save(CustomerDto customerDto) {
+    public CustomerDto createCustomer(CustomerDto customerDto) {
         customerValidator.validate(customerDto);
         customerDto.setPassword(passwordEncoder.encode(customerDto.getPassword()));
         Customer customer = mapper.mapToEntity(customerDto);
@@ -57,12 +55,12 @@ public class CustomerServiceImplementation implements CustomerService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole ('ROLE_USER')")
     @Override
-    public Optional<Customer> findByLogin(String login) {
+    public Optional<Customer> findCustomerByLogin(String login) {
         if (!isAdmin()) {
             log.info("user role is ROLE_USER");
             login = getNameFromAuthentication();
         }
-        return Optional.of(customerRepository.findByLogin(login).
+        return Optional.of(customerRepository.findCustomerByLogin(login).
                 orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND)));
     }
 
@@ -73,21 +71,21 @@ public class CustomerServiceImplementation implements CustomerService {
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @Transactional
     @Override
-    public void delete(String login) {
+    public void deleteCustomer(String login) {
         if (!isAdmin()) {
             log.info("user role is ROLE_USER");
             login = getNameFromAuthentication();
         }
-        if (customerRepository.findByLogin(login).isEmpty()) {
+        if (customerRepository.findCustomerByLogin(login).isEmpty()) {
             log.error("user with login= " + login + " not found");
             throw new AppException(ErrorCode.USER_NOT_FOUND);
         }
-        entityManager.remove(customerRepository.findByLogin(login).get());
+        entityManager.remove(customerRepository.findCustomerByLogin(login).get());
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
-    public List<Customer> findAll() {
+    public List<Customer> findAllCustomers() {
         return customerRepository.findAll();
     }
 
