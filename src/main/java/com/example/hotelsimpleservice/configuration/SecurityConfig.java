@@ -1,9 +1,11 @@
 package com.example.hotelsimpleservice.configuration;
 
 import com.example.hotelsimpleservice.security.implementation.SecurityServiceImplementation;
+import com.example.hotelsimpleservice.security.jwt.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -28,6 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final String LOGIN_ERROR = "/auth/login?error";
     private final String LOGOUT = "/logout";
     private final SecurityServiceImplementation securityServiceImplementation;
+
+    @Autowired
+    private JwtFilter jwtFilter;
 
     @Autowired
     public SecurityConfig(SecurityServiceImplementation securityServiceImplementation) {
@@ -51,12 +57,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                     .logoutUrl(LOGOUT)
                     .logoutSuccessUrl(LOGIN_PAGE);
+            httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(securityServiceImplementation)
                 .passwordEncoder(getPasswordEncoder());
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Bean
